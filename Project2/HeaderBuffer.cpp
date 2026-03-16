@@ -3,7 +3,8 @@
  * @brief implementation of the HeaderBuffer class
  * @author Ethan Jackson (refactoring and documentation)
  * @author Dristi Barnwal (original author)
- * @author Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @author Natoli Mayu (documentation)
+ * @author Marcus Julius, Teagen Lee (reviewers)
  * @date March 2026
  */
 #include "HeaderBuffer.h"
@@ -113,7 +114,7 @@ void HeaderBuffer::print() const {
     cout << "Version:\t    " << header_.version << "\n";
     cout << "Header size:\t    " << header_.headerSizeBytes << " bytes\n";
     cout << "Size format:\t    " << header_.sizeFormatType << "\n";
-    cout << "Size of size field: " << header_.sizeOfSizes << " bytes\n";
+    cout << "Size of size field: " << (int)(header_.sizeOfSizes) << " bytes\n";
     cout<<"Size counts itself: "<<(header_.sizeIncludesItself?"yes":"no")<<"\n";
     cout << "Index file:\t    " << header_.indexFileName << "\n";
     cout << "Record count:\t    " << header_.recordCount << "\n";
@@ -135,7 +136,7 @@ string HeaderBuffer::serialize() const {
        << "," << header_.fileType
        << "," << header_.version
        << "," << header_.sizeFormatType
-       << "," << header_.sizeOfSizes
+       << "," << static_cast<int>(header_.sizeOfSizes)
        << "," << (header_.sizeIncludesItself ? 'y' : 'n')
        << "," << header_.indexFileName
        << "," << header_.recordCount
@@ -164,13 +165,13 @@ bool HeaderBuffer::deserialize(const string& s) {
     if (parts.size() < 13 || (parts.size() % 2 == 0) || parts[0] != "HDR")
         return false;
     header_.fileType             = parts[1];
-    header_.version              = stoi(parts[2]);
+    header_.version              = static_cast<short>(stoi(parts[2]));
     header_.sizeFormatType       = parts[3].at(0);
-    header_.sizeOfSizes          = stoi(parts[4]);
+    header_.sizeOfSizes          = static_cast<unsigned char>(stoi(parts[4]));
     header_.sizeIncludesItself   = (parts[5] == 'y');
     header_.indexFileName        = parts[6];
     header_.recordCount          = stol(parts[7]);
-    header_.fieldCount           = stoi(parts[8]);
+    header_.fieldCount           = static_cast<short>(stoi(parts[8]));
     header_.primaryKeyFieldIndex = stoi(parts[9]);
     header_.staleIndex           = (parts[10] == 'y');
     header_.fieldNames.clear();
