@@ -1,23 +1,20 @@
 /**
  * @file main.cpp
- * @brief Zip Code Group Project 2.0 main controller (CSV → LEN, Index, Search, Analyze)
+ * @brief Zip Code Group Project 2.0 main controller
  *
- * This is a “multi-mode” program. It can run different tasks depending on the command.
+ * This is a “multi-mode” program. It can run four different tasks depending on
+ * the command line arguments.
  *
  * -----------------------------------------------------------------------------
- * MODES (commands you can run)
- * -----------------------------------------------------------------------------
+ * MODES (commands you can run):
  *
- * 1) Project 1 style CSV analysis (streaming / no vector)
+ * -# Project 1 style CSV analysis (streaming / no vector)
  *    ./zipprog <csv_file>
- *
- * 2) Convert CSV → length-indicated data file (.len)
+ * -# Convert CSV → length-indicated data file (.len)
  *    ./zipprog --make-len <input.csv> <output.len>
- *
- * 3) Build primary-key index from .len
+ * -# Build primary-key index from .len
  *    ./zipprog --build-index <data.len> <index.idx>
- *
- * 4) Search ZIP(s) using index (flags like -Z56301)
+ * -# Search ZIP(s) using index (flags like -Z56301)
  *    ./zipprog --search <data.len> <index.idx> -Z56301 -Z99546 -Z99999
  *
  * Notes:
@@ -28,7 +25,10 @@
  * - This file uses the fixed-width ASCII length format:
  *     [10 digits][space][recordText][newline]
  *
- * @author Dristi Barnwal
+ * @author Dristi Barnwal (Project 2 main contributor)
+ * @author Teagen Lee (Project 1 main contributor)
+ * @author Ethan Jackson (additional revisions)
+ * @author Marcus Julius, Natoli Mayu (reviewers)
  * @date March 2026
  */
 
@@ -48,15 +48,10 @@
 
 using namespace std;
 
-/* ============================================================================
- *  STRUCTS USED FOR PROJECT 1 ANALYSIS (STATE EXTREMES)
- * ============================================================================
- */
-
 /**
  * @struct StateExtremes
- * @brief Keeps the most extreme ZIP codes for one state (east/west/north/south).
- *
+ * @brief Keeps the most extreme ZIP codes for one state (east/west/north/south)
+ * 
  * We store:
  * - Which ZIP code is easternmost / westernmost / northernmost / southernmost
  * - The coordinate values used to compare
@@ -64,6 +59,8 @@ using namespace std;
  * Tie-breaking rule:
  * - If two ZIPs tie on coordinate, choose the smaller ZIP so results are stable
  *   even if the input rows are shuffled.
+ *
+ * @since Project 1
  */
 struct StateExtremes {
     int easternmost;
@@ -89,16 +86,18 @@ struct StateExtremes {
  * @param candidate ZIP we are considering
  * @param current ZIP already stored
  * @return true if candidate should replace current
+ * @since Project 1
  */
 static bool smallerZipWins(int candidate, int current) {
-    if (current == 0) return true;  // current not set yet
+    if (current == 0) return true; // current not set yet
     return candidate < current;
 }
 
 /**
  * @brief Update state extremes using one record.
- * @param stateMap Map of state → extremes (updates inside)
+ * @param stateMap Map of state → extremes
  * @param record One ZIP record
+ * @return void (stateMap is an in+out parameter)
  */
 static void updateStateExtremes(map<string, StateExtremes>& stateMap,
                                 const ZipCodeRecord& record) {
@@ -143,10 +142,11 @@ static void updateStateExtremes(map<string, StateExtremes>& stateMap,
 }
 
 /**
- * @brief Print the state extremes table (same idea as Project 1).
+ * @brief Print the state extremes table
  * @param stateMap Map of state → extremes
+ * @since Project 1
  */
-static void printStateExtremesTable(const map<string, StateExtremes>& stateMap) {
+static void printStateExtremesTable(const map<string,StateExtremes>& stateMap) {
     cout << left;
     cout << setw(8)  << "State"
          << setw(15) << "Easternmost"
@@ -178,28 +178,25 @@ static void printStateExtremesTable(const map<string, StateExtremes>& stateMap) 
     cout << "\nTotal states/territories: " << stateMap.size() << "\n";
 }
 
-/* ============================================================================
- *  LENGTH-INDICATED FILE HELPERS (ASCII fixed-width length = 10 digits)
- * ============================================================================
- */
-
 /**
  * @brief Write one “length-indicated” record to an output stream.
  *
  * Format:
- *   [10 digits length][space][text][newline]
+ *   [digits][space][text][newline]
  *
  * Example:
  *   0000000042 56301,St Cloud,MN,Stearns,45.5579,-94.1632
  *
  * @param out Output stream
  * @param text Record text (still CSV inside)
+ * @param width The number of digits to read
  * @return true if write succeeded
+ * @bug does not yet support length indicators in a non-ASCII format
  */
-static bool writeLenLine(ostream& out, const string& text) {
+static bool writeLenLine(ostream& out, const string& text, int width) {
     if (text.empty()) return false;
 
-    out << setw(10) << setfill('0') << text.size()
+    out << setw(width) << setfill('0') << text.size()
         << ' ' << text << '\n';
 
     return static_cast<bool>(out);
@@ -209,45 +206,49 @@ static bool writeLenLine(ostream& out, const string& text) {
  * @brief Read one “length-indicated” record from an input stream.
  *
  * Steps:
- * 1) Read 10 chars (must be digits)
+ * 1) Read a specified number of chars (must be digits)
  * 2) Read one space
  * 3) Read exactly <length> chars into textOut
  * 4) Consume newline if present
  *
  * @param in Input stream
  * @param textOut Output record text (CSV-like)
+ * @param width how many digits to read
  * @return true if record was read, false if EOF or format error
+ * @bug does not yet support length indicators in a non-ASCII format
  */
-static bool readLenLine(istream& in, string& textOut) {
+static bool readLenLine(istream& in, string& textOut, int width) {
     textOut.clear();
 
-    char lenBuf[10];
-    if (!in.read(lenBuf, 10)) return false; // EOF or error
+    char lenBuf[width];
+    if (!in.read(lenBuf, width))
+        return false; // EOF or error
 
-    for (int i = 0; i < 10; i++) {
-        if (!isdigit(static_cast<unsigned char>(lenBuf[i]))) return false;
+    for (int i = 0; i < header.sizeOfSizes; i++) {
+        if (!isdigit(static_cast<unsigned char>(lenBuf[i])))
+            return false;
     }
 
     char space;
-    if (!in.get(space) || space != ' ') return false;
+    if (!in.get(space) || space != ' ')
+        return false;
 
-    int len = stoi(string(lenBuf, 10));
-    if (len < 0) return false;
+    int len = stoi(string(lenBuf, width));
+    if (len < 0)
+        return false;
 
     textOut.resize(len);
-    if (len > 0 && !in.read(&textOut[0], len)) return false;
+    if (len > 0 && !in.read(&textOut[0], len))
+        return false;
 
     // Consume newline if present
-    if (in.peek() == '\n') in.get();
-    else if (in.peek() == '\r') { in.get(); if (in.peek() == '\n') in.get(); }
+    if (in.peek() == '\r')
+        in.get();
+    if (in.peek() == '\n') 
+        in.get();
 
     return true;
 }
-
-/* ============================================================================
- *  SIMPLE CSV FIELD SPLIT (handles basic quotes)
- * ============================================================================
- */
 
 /**
  * @brief Split a CSV line into fields (basic quote support).
@@ -276,21 +277,15 @@ static vector<string> splitCsvSimple(const string& line) {
 /**
  * @brief Print one record with labels on ONE line (Part II requirement).
  * @param csvLine The record data (CSV text inside LEN)
- *
- * Expected order (for now):
- * ZipCode,PlaceName,State,County,Lat,Long
- *
- * If you later support column re-ordering using header metadata,
- * you will change this to print by field names from the header mapping.
+ * @bug this method does not yet support reordered columns.
  */
 static void printLabeledOneLine(const string& csvLine) {
     vector<string> f = splitCsvSimple(csvLine);
 
     for (auto& field : f) {
         if (!field.empty() && field.back() == '\r')
-            field.pop_back();    
+            field.pop_back();
     }
-        
 
     // Remove extra empty field caused by a trailing comma
     if (!f.empty() && f.back().empty()) {
@@ -311,15 +306,11 @@ static void printLabeledOneLine(const string& csvLine) {
          << "\n";
 }
 
-/* ============================================================================
- *  MODE 1: CSV ANALYZE (STREAMING, NO gatherAllRecords)
- * ============================================================================
- */
-
 /**
  * @brief Analyze state extremes from a CSV file without loading all records.
  * @param csvFile Input CSV filename
- * @return exit code (0 success)
+ * @return exit status code (0, 2, or 3)
+ * @see main()
  */
 static int analyzeCsvStreaming(const string& csvFile) {
     ZipCodeBuffer buffer;
@@ -331,7 +322,7 @@ static int analyzeCsvStreaming(const string& csvFile) {
     map<string, StateExtremes> stateMap;
 
     ZipCodeRecord rec;
-    long long count = 0;
+    long count = 0;
 
     while (buffer.readRecord(rec)) {
         updateStateExtremes(stateMap, rec);
@@ -353,11 +344,6 @@ static int analyzeCsvStreaming(const string& csvFile) {
     return 0;
 }
 
-/* ============================================================================
- *  MODE 2: MAKE LEN FILE FROM CSV
- * ============================================================================
- */
-
 /**
  * @brief Convert CSV → LEN file.
  *
@@ -367,7 +353,8 @@ static int analyzeCsvStreaming(const string& csvFile) {
  *
  * @param csvFile Input CSV
  * @param lenFile Output LEN
- * @return exit code
+ * @return exit status code (2-4 or 0)
+ * @see main()
  */
 static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
     ifstream in(csvFile);
@@ -379,14 +366,14 @@ static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
     ofstream out(lenFile);
     if (!out) {
         cerr << "Error: Cannot create LEN file '" << lenFile << "'\n";
-        return 3;
+        return 2;
     }
 
     // Skip CSV header
     string header;
     if (!getline(in, header)) {
         cerr << "Error: CSV file is empty.\n";
-        return 4;
+        return 3;
     }
 
     // Write full header record using HeaderBuffer class
@@ -394,10 +381,10 @@ static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
     hbuf.buildDefault(lenFile + ".idx", 0);
     if (!hbuf.write(out)) {
         cerr << "Error: Failed to write LEN header.\n";
-        return 5;
+        return 4;
     }
 
-    long long recCount = 0;
+    long recCount = 0;
     string line;
     while (getline(in, line)) {
         if (line.empty()) continue;
@@ -413,11 +400,6 @@ static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
     return 0;
 }
 
-/* ============================================================================
- *  MODE 3: BUILD INDEX FROM LEN FILE
- * ============================================================================
- */
-
 /**
  * @brief Build a primary key index (ZIP → byte offset) from a LEN file.
  *
@@ -431,7 +413,8 @@ static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
  *
  * @param lenFile Input LEN data file
  * @param idxFile Output index file
- * @return exit code
+ * @return exit status code (2-4 or 0)
+ * @see main()
  */
 static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
     ifstream in(lenFile);
@@ -443,18 +426,18 @@ static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
     ofstream out(idxFile);
     if (!out) {
         cerr << "Error: Cannot create index file '" << idxFile << "'\n";
-        return 3;
+        return 2;
     }
 
     string header;
     if (!readLenLine(in, header)) {
         cerr << "Error: LEN file is missing header or is corrupted.\n";
-        return 4;
+        return 3;
     }
 
     out << "IDX,1\n";
 
-    long long entries = 0;
+    long entries = 0;
     while (true) {
         streampos pos = in.tellg();
 
@@ -466,7 +449,7 @@ static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
         if (comma == string::npos) continue;
 
         string zip = record.substr(0, comma); // keep leading zeros if any
-        out << zip << " " << static_cast<long long>(pos) << "\n";
+        out << zip << " " << static_cast<long>(pos) << "\n";
         entries++;
     }
 
@@ -475,52 +458,42 @@ static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
     return 0;
 }
 
-/* ============================================================================
- *  MODE 4: SEARCH USING LEN + INDEX
- * ============================================================================
- */
-
-/**
- * @brief Load an index file into RAM.
- * @param idxFile Index filename
- * @return map ZIP(string) → offset
- */
-static unordered_map<string, streampos> loadIndex(const string& idxFile) {
-    unordered_map<string, streampos> idx;
-
-    ifstream in(idxFile);
-    if (!in) return idx;
-
-    string firstLine;
-    getline(in, firstLine); // IDX,1
-
-    string zip;
-    long long pos;
-    while (in >> zip >> pos) {
-        idx[zip] = static_cast<streampos>(pos);
-    }
-    return idx;
-}
-
 /**
  * @brief Search all -Z flags provided and print results.
  * @param lenFile Data file (.len)
  * @param idxFile Index file (.idx)
  * @param zips List of ZIP strings to search
- * @return exit code
+ * @return exit status code (0, 2 or 3)
+ * @see main()
  */
-static int searchZips(const string& lenFile,
-                      const string& idxFile,
+static int searchZips(const string& lenFile, const string& idxFile,
                       const vector<string>& zips) {
-    unordered_map<string, streampos> idx = loadIndex(idxFile);
-    if (idx.empty()) {
-        cerr << "Error: Index file could not be read or is empty: " << idxFile << "\n";
-        return 2;
-    }
-
     ifstream data(lenFile);
     if (!data) {
         cerr << "Error: Cannot open LEN data file: " << lenFile << "\n";
+        return 2;
+    }
+
+    
+    ifstream in(idxFile);
+    if (!in) {
+        cerr << "Error: Cannot open IDX data file: " << idxFile << "\n";
+        return 2;
+    }
+
+    unordered_map<string, streampos> idx;
+
+    string firstLine;
+    getline(in, firstLine); // IDX,1
+
+    string zip;
+    long pos;
+    while (in >> zip >> pos) {
+        idx[zip] = static_cast<streampos>(pos);
+    }
+
+    if (idx.empty()) {
+        cerr << "Error: Index file is empty: " << idxFile << "\n";
         return 3;
     }
 
@@ -528,7 +501,7 @@ static int searchZips(const string& lenFile,
     string header;
     if (!readLenLine(data, header)) {
         cerr << "Error: LEN data file header missing or corrupted.\n";
-        return 4;
+        return 3;
     }
 
     cout << "Using data file: " << lenFile << "\n";
@@ -547,7 +520,8 @@ static int searchZips(const string& lenFile,
 
         string recordLine;
         if (!readLenLine(data, recordLine)) {
-            cout << "ZIP " << zip << " found in index but record could not be read (stale index)\n";
+            cout << "ZIP " << zip << " found in index but record could not be "
+                 << "read (stale index)\n"; //continued from line above
             continue;
         }
 
@@ -556,11 +530,6 @@ static int searchZips(const string& lenFile,
 
     return 0;
 }
-
-/* ============================================================================
- *  USAGE MESSAGE
- * ============================================================================
- */
 
 /**
  * @brief Print usage instructions (simple).
@@ -575,14 +544,23 @@ static void printUsage(const string& prog) {
     cerr << "  3) Build index from LEN:\n";
     cerr << "     " << prog << " --build-index <data.len> <out.idx>\n\n";
     cerr << "  4) Search ZIPs using LEN + IDX:\n";
-    cerr << "     " << prog << " --search <data.len> <data.idx> -Z56301 -Z99546 -Z99999\n";
+    cerr << "     " << prog //continued on line below
+         << " --search <data.len> <data.idx> -Z<zip code> [-Z<zip code> ...]\n";
 }
 
-/* ============================================================================
- *  MAIN
- * ============================================================================
+/**
+ * @brief the program's main method
+ * @since Project 2
+ * 
+ * EXIT STATUS CODE INTERPETATION:
+ * - 0 = successful exit
+ * - 1 = malformed command line arguments
+ * - 2 = nonexistent or innaccesible file
+ * - 3 = failed to read header data
+ * - 4 = failed to write header data
+ *
+ * @return an exit status code from 0 to 4
  */
-
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         printUsage(argv[0]);
@@ -591,7 +569,7 @@ int main(int argc, char* argv[]) {
 
     string cmd = argv[1];
 
-    // MODE: --make-len in.csv out.len
+    // MODE 2: --make-len in.csv out.len
     if (cmd == "--make-len") {
         if (argc != 4) {
             printUsage(argv[0]);
@@ -600,7 +578,7 @@ int main(int argc, char* argv[]) {
         return makeLenFromCsv(argv[2], argv[3]);
     }
 
-    // MODE: --build-index data.len out.idx
+    // MODE 3: --build-index data.len out.idx
     if (cmd == "--build-index") {
         if (argc != 4) {
             printUsage(argv[0]);
@@ -609,7 +587,7 @@ int main(int argc, char* argv[]) {
         return buildIndexFromLen(argv[2], argv[3]);
     }
 
-    // MODE: --search data.len data.idx -Zxxxxx ...
+    // MODE 4: --search data.len data.idx -Zxxxxx ...
     if (cmd == "--search") {
         if (argc < 5) {
             printUsage(argv[0]);
@@ -636,7 +614,7 @@ int main(int argc, char* argv[]) {
         return searchZips(lenFile, idxFile, zips);
     }
 
-    // DEFAULT MODE: treat argv[1] as CSV file and analyze
+    // MODE 1 (default): treat argv[1] as CSV file and analyze state extremes
     // Example: ./zipprog us_postal_codes.csv
     return analyzeCsvStreaming(argv[1]);
 }
