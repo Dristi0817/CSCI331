@@ -17,23 +17,61 @@ using namespace std;
 
 /**
  * @struct FileHeader
- * @brief All header record fields required by the assignment.
+ * @brief All header record fields required by the assignment
  */
 struct FileHeader {
-    bool sizeIncludesItself;  ///< true if size counts itself
-    bool staleIndex;          ///< true if index may be out of date
-    char sizeFormatType;      ///< 'A' for ASCII, 'b' for binary
-    int version;              ///< format version number, currently 2
-    int sizeOfSizes;          ///< number of bytes used for record length
-    int headerSizeBytes;      ///< size of header record in bytes
-    int recordSizeByteCount;  ///< bytes used for each record size integer
-    int fieldCount;           ///< number of fields in each record
-    int primaryKeyFieldIndex; ///< 0-based index of the primary key field
-    long recordCount;         ///< total number of data records
-    string fileType;          ///< name of file type, e.g. "ZipLenFile"
-    string indexFileName;     ///< name of the .idx file
-    vector<string> fieldNames;///< the names of every field, e.g. "PlaceName"
-    vector<string> fieldTypes;///< the data types of every field, e.g. "int"
+    /**
+     * True if the record length field includes its own size.
+     */
+    bool sizeIncludesItself;
+    /**
+     * True if the index may be out of date.
+     */
+    bool staleIndex;
+    /**
+     * The encoding of the record length indicator ('A' = ASCII, 'b' = binary).
+     */
+    char sizeFormatType;
+    /**
+     * The size of the record length indicator field in bytes.
+     */
+    unsigned char sizeOfSizes;
+    /**
+     * The version number for this file header structure (currently 3).
+     */
+    short version;
+    /**
+     * The number of fields in each record.
+     */
+    int fieldCount;
+    /**
+     * Zero-based index of the primary key column.
+     */
+    int primaryKeyFieldIndex;
+    /**
+     * The size of this header record in bytes.
+     */
+    int headerSizeBytes;
+    /**
+     * The total number of data records.
+     */
+    long recordCount;
+    /**
+     * The name of the file type, e.g. "ZipLenFile".
+     */
+    string fileType;
+    /**
+     * The name of the associated .idx file.
+     */
+    string indexFileName;
+    /**
+     * The names of every column, e.g. "PlaceName"
+     */
+    vector<string> fieldNames;
+    /**
+     * The data types of every column, e.g. "int"
+     */
+    vector<string> fieldTypes;
 };
 
 /**
@@ -42,6 +80,7 @@ struct FileHeader {
  */
 class HeaderBuffer {
 public:
+    /// Default constructor
     HeaderBuffer();
 
     /// Build a default header for the ZIP code file
@@ -61,11 +100,8 @@ public:
 
 private:
     FileHeader header_;
-
     string serialize() const;
     bool deserialize(const string& s);
-    bool writeLenLine(ofstream& out, const string& text);
-    bool readLenLine(ifstream& in, string& text);
 };
 
 #endif
