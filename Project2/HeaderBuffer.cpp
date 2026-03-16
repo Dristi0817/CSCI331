@@ -2,9 +2,9 @@
  * @file HeaderBuffer.cpp
  * @brief implementation of the HeaderBuffer class
  * @author Ethan Jackson (refactoring and documentation)
- * @author Dristi Barnwal (original author)
+ * @author Teagan Lee (original author)
  * @author Natoli Mayu (documentation)
- * @author Marcus Julius, Teagen Lee (reviewers)
+ * @author Dristi Barnwal, Marcus Julius (reviewers)
  * @date March 2026
  */
 #include "HeaderBuffer.h"

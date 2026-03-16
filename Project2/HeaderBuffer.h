@@ -1,9 +1,9 @@
 /**
  * @file HeaderBuffer.h
  * @brief defines the HeaderBuffer class and the FileHeader struct.
- * @author Dristi Barnwal (primary contributor)
+ * @author Teagan Lee (primary contributor)
  * @author Ethan Jackson (functional revisions and additional comments)
- * @author Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @author Dristi Barnwal, Marcus Julius, Natoli Mayu (reviewers)
  * @date March 2026 
  */
 #ifndef HEADERBUFFER_H
