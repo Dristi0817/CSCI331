@@ -46,7 +46,7 @@ void HeaderBuffer::buildDefault(const string& indexFileName, long recordCount) {
     header_.staleIndex = false;
     header_.fieldNames = {"ZipCode", "PlaceName", "State", "County", //continued
                           "Longitude", "Latitude"};
-    header_.fieldTypes = {"int","string","string","string","double","double"}
+    header_.fieldTypes = {"int","string","string","string","double","double"};
     header_.fieldCount = (int)header_.fieldNames.size();
     header_.headerSizeBytes = (int)serialize().size();
 }
@@ -107,11 +107,11 @@ bool HeaderBuffer::read(ifstream& in) {
         if (!in.get(sp) || sp != ' ')
             return false;
 
-        len = stoui(string(buf, header_.sizeOfSizes));
+        len = stoul(string(buf, header_.sizeOfSizes));
     } else {
         if (header_.sizeOfSizes > sizeof(len)) 
             return false; //sizeOfSizes has more bytes than len can hold
-        if (!in.read(reinterpret_cast<char*>(&len), sizeof len)
+        if (!in.read(reinterpret_cast<char*>(&len), sizeof(len)))
             return false;
     }
     text.resize(len);
@@ -141,9 +141,11 @@ void HeaderBuffer::print() const {
     cout << "Field count:\t    " << header_.fieldCount << "\n";
     cout << "Primary key field:  " << header_.primaryKeyFieldIndex << "\n";
     cout << "Stale index:\t    " << (header_.staleIndex ? "yes" : "no") << "\n";
-    for (int i = 0; i < (int)header_.fieldCount; i++)
-        cout << "Field[" << i << "]:\t    " << header_.fieldNames[i];
+    for (int i = 0; i < (int)header_.fieldCount; i++){
+        cout << "Field[" << i << "]:\t    " << header_.fieldNames[i]
              << " (" << header_.fieldTypes[i] << ")\n";
+    }
+        
 }
 
 /**
@@ -195,12 +197,12 @@ bool HeaderBuffer::deserialize(const string& s) {
     header_.version              = static_cast<short>(stoi(parts[2]));
     header_.sizeFormatType       = parts[3].at(0);
     header_.sizeOfSizes          = static_cast<unsigned char>(stoi(parts[4]));
-    header_.sizeIncludesItself   = (parts[5] == 'y');
+    header_.sizeIncludesItself   = (parts[5] == "y");
     header_.indexFileName        = parts[6];
     header_.recordCount          = stol(parts[7]);
     header_.fieldCount           = static_cast<short>(stoi(parts[8]));
     header_.primaryKeyFieldIndex = stoi(parts[9]);
-    header_.staleIndex           = (parts[10] == 'y');
+    header_.staleIndex           = (parts[10] == "y");
     header_.fieldNames.clear();
     header_.fieldTypes.clear();
     if (header_.fieldCount * 2 + 11 != parts.size())
