@@ -25,9 +25,14 @@ using namespace std;
 HeaderBuffer::HeaderBuffer() {}
 
 /**
- * @brief Sets the fields of this HeaderBuffer to suitable defualt values
- * @param indexFileName the name of the index file
- * @param recordCount the total number of records in the file
+ * @brief Builds a default header structure.
+ *
+ * Initializes the file header metadata including file type,
+ * version number, record size formatting, index file name,
+ * record count, and field descriptions for Zip Code records.
+ *
+ * @param indexFileName Name of the primary key index file.
+ * @param recordCount Number of records stored in the data file.
  */
 void HeaderBuffer::buildDefault(const string& indexFileName, long recordCount) {
     header_.fileType = "ZipLenFile";
@@ -46,16 +51,26 @@ void HeaderBuffer::buildDefault(const string& indexFileName, long recordCount) {
     header_.headerSizeBytes = (int)serialize().size();
 }
 
+/**
+ * @brief Retrieves the current file header.
+ *
+ * @return Constant reference to the FileHeader structure.
+ */
 const FileHeader& HeaderBuffer::getHeader() const {
     return header_;
 }
 
 /**
- * @brief Writes this HeaderBuffer to an output file
+ * @brief Writes the header record to an output file
+ *
+ * The header is serialized and written using a length indicated
+ * record format.
  *
  * @param out the output file stream
+ * @return true if the header was written successfully
  * @warning binary format is experimental and has not yet been tested.
  */
+
 bool HeaderBuffer::write(ofstream& out) {
     string text = serialize();
     int len = header_.headerSizeBytes;
@@ -71,7 +86,7 @@ bool HeaderBuffer::write(ofstream& out) {
  * @brief Reads header data from an input file
  *
  * @param in the input file stream
- * @return true if the read is successful
+ * @return true if the header was successfully read and parsed
  *
  * @warning binary format is experimental and has not yet been tested.
  */
@@ -109,6 +124,11 @@ bool HeaderBuffer::read(ifstream& in) {
     return deserialize(text);
 }
 
+/**
+ * @brief Prints the header metadata to the console.
+ *
+ * This function is for debugging and verifying the contents of the file header.
+ */
 void HeaderBuffer::print() const {
     cout << "File type:\t    " << header_.fileType << "\n";
     cout << "Version:\t    " << header_.version << "\n";
@@ -127,8 +147,12 @@ void HeaderBuffer::print() const {
 }
 
 /**
- * Helper function for HeaderBuffer::write(). Converts HeaderBuffer into a 
- * comma-delimited line of text.
+ * @brief Serializes the header structure into a comma separated string.
+ *
+ * The serialized string begins with the identifier "HDR" followed
+ * by all metadata values and field definitions.
+ * 
+ * @return Serialized header string.
  */
 string HeaderBuffer::serialize() const {
     ostringstream ss;
@@ -151,10 +175,13 @@ string HeaderBuffer::serialize() const {
 }
 
 /**
- * Helper function for HeaderBuffer::read(). Converts a comma-delimited line of 
- * text produced by the serialize function back into HeaderBuffer data.
- * 
- * @return true if the deserialization was successful
+ * @brief Converts a serialized header string into a header structure.
+ *
+ * Parses the comma separated metadata and reconstructs the FileHeader structure
+ * including field descriptors.
+ *
+ * @param s Serialized header string.
+ * @return true if the header was successfully parsed.
  */
 bool HeaderBuffer::deserialize(const string& s) {
     istringstream ss(s);
