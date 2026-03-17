@@ -224,7 +224,7 @@ static bool readLenLine(istream& in, string& textOut, int width) {
     if (!in.read(lenBuf, width))
         return false; // EOF or error
 
-    for (int i = 0; i < header.sizeOfSizes; i++) {
+    for (int i = 0; i < width; i++) {
         if (!isdigit(static_cast<unsigned char>(lenBuf[i])))
             return false;
     }
