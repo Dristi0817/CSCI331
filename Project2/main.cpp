@@ -191,7 +191,7 @@ static void printStateExtremesTable(const map<string,StateExtremes>& stateMap) {
  * @param text Record text (still CSV inside)
  * @param width The number of digits to read
  * @return true if write succeeded
- * @bug does not yet support length indicators in a non-ASCII format
+ * @bug does not yet support length indicators in a non-ASCII format.
  */
 static bool writeLenLine(ostream& out, const string& text, int width) {
     if (text.empty()) return false;
@@ -388,7 +388,7 @@ static int makeLenFromCsv(const string& csvFile, const string& lenFile) {
     string line;
     while (getline(in, line)) {
         if (line.empty()) continue;
-        if (!writeLenLine(out, line)) {
+        if (!writeLenLine(out, line, 10)) {
             cerr << "Warning: skipped a line that could not be written.\n";
             continue;
         }
@@ -430,7 +430,7 @@ static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
     }
 
     string header;
-    if (!readLenLine(in, header)) {
+    if (!readLenLine(in, header, 10)) {
         cerr << "Error: LEN file is missing header or is corrupted.\n";
         return 3;
     }
@@ -442,11 +442,13 @@ static int buildIndexFromLen(const string& lenFile, const string& idxFile) {
         streampos pos = in.tellg();
 
         string record;
-        if (!readLenLine(in, record)) break;
+        if (!readLenLine(in, record, 10))
+            break;
 
         // ZIP is first field before comma
         size_t comma = record.find(',');
-        if (comma == string::npos) continue;
+        if (comma == string::npos)
+            continue;
 
         string zip = record.substr(0, comma); // keep leading zeros if any
         out << zip << " " << static_cast<long>(pos) << "\n";
@@ -499,7 +501,7 @@ static int searchZips(const string& lenFile, const string& idxFile,
 
     // Read and keep header in RAM (allowed)
     string header;
-    if (!readLenLine(data, header)) {
+    if (!readLenLine(data, header, 10)) {
         cerr << "Error: LEN data file header missing or corrupted.\n";
         return 3;
     }
@@ -519,7 +521,7 @@ static int searchZips(const string& lenFile, const string& idxFile,
         data.seekg(it->second);
 
         string recordLine;
-        if (!readLenLine(data, recordLine)) {
+        if (!readLenLine(data, recordLine, 10)) {
             cout << "ZIP " << zip << " found in index but record could not be "
                  << "read (stale index)\n"; //continued from line above
             continue;
