@@ -1,4 +1,10 @@
-// IndexBuilder.cpp
+/**
+ * @file IndexBuilder.cpp
+ * @brief Implementation for building ZIP->offset index files.
+ * @author Dristi Barnwal (primary contributor)
+ * @author Ethan Jackson, Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @date March 2026
+ */
 #include "IndexBuilder.h"
 #include "LenFileReader.h"
 
@@ -7,11 +13,6 @@
 #include <string>
 
 using namespace std;
-
-/**
- * @file IndexBuilder.cpp
- * @brief Implementation for building ZIP->offset index files.
- */
 
 /**
  * @brief Builds an index file for the provided .len file.

@@ -1,12 +1,9 @@
-// LenFileWriter.h
-#ifndef LENFILEWRITER_H
-#define LENFILEWRITER_H
-
-#include <string>
-
 /**
  * @file LenFileWriter.h
  * @brief Converts a CSV file into a length-indicated file (.len).
+ * @author Dristi Barnwal (primary contributor)
+ * @author Ethan Jackson, Marcus Julius, Teagen Lee, Natoli Mayu (reviewers) 
+ * @date March 2026
  *
  * A "length-indicated" file means:
  * - Each record (line) is saved with its size (length) written first.
@@ -22,8 +19,12 @@
  *
  * Why we do this:
  * - Later, we will build an index that stores ZIP -> file position (offset).
- * - Then we can "jump" directly to a ZIP record without reading the whole file.
+ * - Then we can jump directly to a ZIP record without reading the whole file.
  */
+#ifndef LENFILEWRITER_H
+#define LENFILEWRITER_H
+
+#include <string>
 
 /**
  * @brief Creates a .len file from a CSV file.
@@ -38,8 +39,8 @@
  *    - writes the CSV record text
  *    - writes newline
  *
- * @param csvFile Path to the input CSV file (example: "us_postal_codes.csv")
- * @param lenFile Path to the output length-indicated file (example: "sorted.len")
+ * @param csvFile Path to the input CSV file (e.g. "us_postal_codes.csv")
+ * @param lenFile Path to the output length-indicated file (e.g. "sorted.len")
  */
 void makeLenFile(const std::string& csvFile,
                  const std::string& lenFile);

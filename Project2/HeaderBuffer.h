@@ -1,3 +1,11 @@
+/**
+ * @file HeaderBuffer.h
+ * @brief defines the HeaderBuffer class and the FileHeader struct.
+ * @author Teagan Lee (primary contributor)
+ * @author Ethan Jackson (functional revisions and additional comments)
+ * @author Dristi Barnwal, Marcus Julius, Natoli Mayu (reviewers)
+ * @date March 2026 
+ */
 #ifndef HEADERBUFFER_H
 #define HEADERBUFFER_H
 
@@ -8,32 +16,62 @@
 using namespace std;
 
 /**
- * @struct FieldDescriptor
- * @brief Stores the name and type format for one field in the data file.
- */
-struct FieldDescriptor {
-    string name;    ///< e.g. "ZipCode", "PlaceName"
-    string format;  ///< e.g. "int", "string", "double"
-};
-
-/**
  * @struct FileHeader
- * @brief All header record fields required by the assignment.
+ * @brief All header record fields required by the assignment
  */
 struct FileHeader {
-    string fileType;          ///< e.g. "ZipLenFile"
-    int version;              ///< version number, start at 1
-    int headerSizeBytes;      ///< size of header record in bytes
-    int recordSizeByteCount;  ///< bytes used for each record size integer
-    string sizeFormatType;    ///< "ASCII" or "binary"
-    int sizeOfSizes;          ///< how many bytes represent the size
-    bool sizeIncludesItself;  ///< true if size counts itself
-    string indexFileName;     ///< name of the .idx file
-    long long recordCount;    ///< total data records
-    int fieldCount;           ///< number of fields per record
-    vector<FieldDescriptor> fields; ///< one entry per field
-    int primaryKeyFieldIndex; ///< 0-based index of the primary key field
-    bool staleIndex;          ///< true if index may be out of date
+    /**
+     * True if the record length field includes its own size.
+     */
+    bool sizeIncludesItself;
+    /**
+     * True if the index may be out of date.
+     */
+    bool staleIndex;
+    /**
+     * The encoding of the record length indicator ('A' = ASCII, 'b' = binary).
+     */
+    char sizeFormatType;
+    /**
+     * The size of the record length indicator field in bytes.
+     */
+    unsigned char sizeOfSizes;
+    /**
+     * The version number for this file header structure (currently 3).
+     */
+    short version;
+    /**
+     * The number of fields in each record.
+     */
+    int fieldCount;
+    /**
+     * Zero-based index of the primary key column.
+     */
+    int primaryKeyFieldIndex;
+    /**
+     * The size of this header record in bytes.
+     */
+    int headerSizeBytes;
+    /**
+     * The total number of data records.
+     */
+    long recordCount;
+    /**
+     * The name of the file type, e.g. "ZipLenFile".
+     */
+    string fileType;
+    /**
+     * The name of the associated .idx file.
+     */
+    string indexFileName;
+    /**
+     * The names of every column, e.g. "PlaceName"
+     */
+    vector<string> fieldNames;
+    /**
+     * The data types of every column, e.g. "int"
+     */
+    vector<string> fieldTypes;
 };
 
 /**
@@ -42,10 +80,11 @@ struct FileHeader {
  */
 class HeaderBuffer {
 public:
+    /// Default constructor
     HeaderBuffer();
 
     /// Build a default header for the ZIP code file
-    void buildDefault(const string& indexFileName, long long recordCount);
+    void buildDefault(const string& indexFileName, long recordCount);
 
     /// Write header to an open output stream
     bool write(ofstream& out);
@@ -61,11 +100,8 @@ public:
 
 private:
     FileHeader header_;
-
     string serialize() const;
     bool deserialize(const string& s);
-    bool writeLenLine(ofstream& out, const string& text);
-    bool readLenLine(ifstream& in, string& text);
 };
 
 #endif
