@@ -1,0 +1,243 @@
+==============================================================================
+  CSCI 331 — Project 3: Blocked Sequence Set — User Guide
+==============================================================================
+
+PROGRAM NAME
+  zip3
+
+BUILD
+  g++ -std=c++17 -o zip3 main.cpp BlockBuffer.cpp BlockHeaderBuffer.cpp \
+      SimpleIndex.cpp SequenceSet.cpp ZipCodeBuffer.cpp
+
+OVERVIEW
+  zip3 manages a blocked sequence set of US ZIP code records. Records are
+  stored in fixed-size blocks on disk, sorted by ZIP code (primary key).
+  A simple primary key index maps the highest key in each block to its
+  Relative Block Number (RBN) and is loaded entirely into RAM during
+  search, add, and delete operations.
+
+  Block layout (active block):
+    [4-byte count][8-byte predRBN][8-byte succRBN][records...]
+    Each record: [4-byte length prefix][CSV text]
+
+  Block layout (avail block):
+    [4-byte "0000"][8-byte "FFFFFFFF"][8-byte nextAvailRBN][spaces...]
+
+  RBN 0  = header block (file metadata)
+  RBN 1+ = data or avail blocks
+
+------------------------------------------------------------------------------
+COMMAND REFERENCE
+------------------------------------------------------------------------------
+
+1) CREATE — Build a new blocked sequence set from a sorted CSV file.
+
+   ./zip3 --create <sorted.csv> <out.bss> <out.sidx> [blockSize]
+
+   Arguments:
+     sorted.csv   Input CSV (must be sorted ascending by ZIP code)
+     out.bss      Output blocked sequence set file
+     out.sidx     Output simple index file
+     blockSize    (optional) bytes per block; default = 512
+
+   Example:
+     ./zip3 --create us_postal_codes.csv zipcode.bss zipcode.sidx
+     ./zip3 --create us_postal_codes.csv zipcode.bss zipcode.sidx 256
+
+   Output:
+     Created blocked sequence set: zipcode.bss
+       Records : 40933
+       Blocks  : 4095 data blocks (+ 1 header)
+       Index   : zipcode.sidx (4095 entries)
+
+------------------------------------------------------------------------------
+
+2) HEADER — Display the file header record.
+
+   ./zip3 --header <data.bss> <data.sidx> [blockSize]
+
+   Example:
+     ./zip3 --header zipcode.bss zipcode.sidx
+
+   Output shows: file type, version, block size, record count, field schema,
+   avail-list head RBN, sequence-set head RBN, and stale flag.
+
+------------------------------------------------------------------------------
+
+3) DUMP — Display blocks in physical order then logical order.
+
+   ./zip3 --dump <data.bss> <data.sidx> [blockSize]
+
+   Format:
+     List Head:  <rbn>
+     Avail Head: <rbn>
+     <predRBN>  key1 key2 ... keyN  <succRBN>   (RBN n)
+     <predRBN>  *available*          <succRBN>   (RBN n)
+
+   The physical dump lists blocks in RBN order (1, 2, 3, ...).
+   The logical dump follows the successor chain in key order.
+   After initial creation, both dumps are identical. After inserts/deletes
+   that cause splits or merges, they will differ — use diff to compare.
+
+   Example:
+     ./zip3 --dump small.bss small.sidx 256
+
+------------------------------------------------------------------------------
+
+4) DUMP-INDEX — Display the simple primary key index.
+
+   ./zip3 --dump-index <data.bss> <data.sidx> [blockSize]
+
+   Each line shows: highest key in block → RBN
+
+   Example:
+     ./zip3 --dump-index small.bss small.sidx 256
+
+   Output:
+     HighestKey    RBN
+     --------------------
+     01007         1
+     01012         2
+     ...
+
+------------------------------------------------------------------------------
+
+5) SEARCH — Find ZIP code records using the index (index loaded into RAM;
+            data file never fully loaded into RAM).
+
+   ./zip3 --search <data.bss> <data.sidx> -Z<zip> [-Z<zip> ...] [blockSize]
+
+   Flags:
+     -Z<zip>   ZIP code to search for (leading zeros optional: -Z1001 or -Z01001)
+
+   The program uses the simple index to find the candidate block, reads
+   only that block from disk, and performs a linear search within it.
+
+   Example:
+     ./zip3 --search zipcode.bss zipcode.sidx -Z56301 -Z90210 -Z00001
+
+   Output:
+     ZIP=56301 | Place=Saint Cloud | State=MN | County=Stearns | Lat=45.541 | Long=-94.1819
+     ZIP=90210 | Place=Beverly Hills | State=CA | County=Los Angeles | ...
+     ZIP 00001 not found in file.
+
+------------------------------------------------------------------------------
+
+6) ANALYZE — Project-1-style state extremes analysis via sequential scan.
+
+   ./zip3 --analyze <data.bss> <data.sidx> [blockSize]
+
+   Reads all records in logical order (following successor chain), computes
+   the easternmost/westernmost/northernmost/southernmost ZIP per state, and
+   prints a table. Reads one block at a time — never loads the whole file.
+
+   Example:
+     ./zip3 --analyze zipcode.bss zipcode.sidx
+
+------------------------------------------------------------------------------
+
+7) ADD — Insert records from a CSV file.
+
+   ./zip3 --add <data.bss> <data.sidx> <records.csv> [blockSize]
+
+   File format (records.csv):
+     One record per line, no header row, same field order as the original CSV:
+       ZipCode,PlaceName,State,County,Lat,Long
+     Lines starting with # are treated as comments.
+
+   Behavior:
+     - Finds the target block using the index.
+     - Inserts the record in sorted order.
+     - If the block is full, splits it: one half keeps the original RBN,
+       the other half gets a block from the avail list (or a newly appended
+       block). Both the predecessor/successor links and the index are updated.
+     - Block splits are logged to stdout.
+     - Duplicate keys are rejected with a warning.
+
+   Example:
+     ./zip3 --add zipcode.bss zipcode.sidx add.csv
+
+   Sample add.csv:
+     01004,Amherst,MA,Hampshire,42.3710,-72.5170
+     01009,Ware,MA,Hampshire,42.2601,-72.2445
+
+   Output:
+     LOG: Block split at RBN 1 (inserting ZIP 01004)
+     LOG: Index updated after split — left high=01003 (RBN 1), right high=01007 (RBN 6)
+     Added ZIP 1004
+     Added ZIP 1009
+     Added: 2  Skipped/failed: 0
+
+------------------------------------------------------------------------------
+
+8) DELETE — Delete records whose keys are listed in a file.
+
+   ./zip3 --delete <data.bss> <data.sidx> <keys.txt> [blockSize]
+
+   File format (keys.txt):
+     One ZIP code per line (leading zeros optional).
+     Lines starting with # are comments.
+
+   Behavior:
+     - Finds and removes the record from its block.
+     - If the block falls below 50% capacity, attempts redistribution with
+       a neighbour (left preferred). Logs redistribution events.
+     - If redistribution is not possible, merges with a neighbour. The
+       logically rightmost block of the pair is cleared and added to the
+       avail list. Logs merge events.
+     - Index updated after each deletion.
+     - Keys not found are reported and skipped.
+
+   Example:
+     ./zip3 --delete zipcode.bss zipcode.sidx keys.txt
+
+   Sample keys.txt:
+     01002
+     01005
+
+   Output:
+     Deleted ZIP 01002
+     Deleted ZIP 01005
+     LOG: Redistribution between RBN 2 (left) and RBN 3 (right)
+     LOG: Index updated after redistribution
+     Deleted: 2  Not found: 0
+
+------------------------------------------------------------------------------
+
+FILE FORMATS
+------------------------------------------------------------------------------
+
+Blocked Sequence Set (.bss):
+  Binary/text hybrid. Each block is exactly <blockSize> bytes.
+  RBN 0: header record (length-indicated CSV, padded to blockSize with spaces)
+  RBN 1+: data or avail blocks in the layout described above.
+  RBN links: 8-byte zero-padded ASCII integers; "FFFFFFFF" = null link.
+
+Simple Index (.sidx):
+  Plain text.
+  Line 0: SIDX,1
+  Line N: <highestKey> <rbn>
+  Entries are sorted by highestKey (5-digit zero-padded ZIP strings).
+  The entire index is loaded into RAM during search/add/delete.
+
+Add file (.csv):
+  Plain CSV, no header row.
+  Fields: ZipCode,PlaceName,State,County,Lat,Long
+
+Delete file (.txt):
+  One ZIP code per line. Leading zeros optional.
+
+------------------------------------------------------------------------------
+
+NOTES
+  - The data file is never fully loaded into RAM during search, add, or delete.
+    Only the index and one block at a time are held in memory.
+  - Block size is set at creation time and stored in the header. When opening
+    an existing file you must pass the same blockSize used at creation,
+    OR omit it to use the default (512). The program always reads blockSize
+    from the header after opening.
+  - After creation, physical and logical dumps are identical. After any insert
+    that causes a split (where the new block is appended or taken from the
+    avail list), the two dumps will differ in ordering.
+
+==============================================================================

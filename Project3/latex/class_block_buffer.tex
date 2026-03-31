@@ -1,0 +1,398 @@
+﻿\doxysection{Block\+Buffer Class Reference}
+\hypertarget{class_block_buffer}{}\label{class_block_buffer}\index{BlockBuffer@{BlockBuffer}}
+
+
+Reads and writes fixed-\/size blocks in a blocked sequence set file.  
+
+
+
+
+{\ttfamily \+\#include $<$Block\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_block_buffer_aa5ff981d27b7ade430a60ccd5c161335}{Block\+Buffer}} (int block\+Size=DEFAULT\+\_\+\+BLOCK\+\_\+\+SIZE)
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{class_block_buffer}{Block\+Buffer} for the given block size. \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_a52124e97eb3b72fe5ab5fed8c0a4052e}\label{class_block_buffer_a52124e97eb3b72fe5ab5fed8c0a4052e} 
+int {\bfseries get\+Block\+Size} () const
+\begin{DoxyCompactList}\small\item\em Return the configured block size in bytes. \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_a67909ab42a499b88923047fddfca09f1}\label{class_block_buffer_a67909ab42a499b88923047fddfca09f1} 
+int {\bfseries get\+Record\+Count} () const
+\begin{DoxyCompactList}\small\item\em Return number of records currently in buffer. \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_acb4d57e911354b8ed7619c179a7b68e0}\label{class_block_buffer_acb4d57e911354b8ed7619c179a7b68e0} 
+int {\bfseries get\+Pred\+RBN} () const
+\begin{DoxyCompactList}\small\item\em Predecessor block RBN (RBN\+\_\+\+NULL if none). \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_ab803e39d4eb47c8ba1b1105626aa1bfa}\label{class_block_buffer_ab803e39d4eb47c8ba1b1105626aa1bfa} 
+int {\bfseries get\+Succ\+RBN} () const
+\begin{DoxyCompactList}\small\item\em Successor block RBN (RBN\+\_\+\+NULL if none). \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_a1eda338d5a80cb51618d4378358f7f6d}\label{class_block_buffer_a1eda338d5a80cb51618d4378358f7f6d} 
+bool {\bfseries is\+Avail} () const
+\begin{DoxyCompactList}\small\item\em True if this is an avail-\/list block (count==0). \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_acdc0e8086e694905207be0f282f9f9a4}\label{class_block_buffer_acdc0e8086e694905207be0f282f9f9a4} 
+void {\bfseries set\+Pred\+RBN} (int rbn)
+\begin{DoxyCompactList}\small\item\em Set predecessor link. \end{DoxyCompactList}\item 
+\Hypertarget{class_block_buffer_a63a740311a0418225ff6e36b494c8527}\label{class_block_buffer_a63a740311a0418225ff6e36b494c8527} 
+void {\bfseries set\+Succ\+RBN} (int rbn)
+\begin{DoxyCompactList}\small\item\em Set successor link. \end{DoxyCompactList}\item 
+const vector$<$ string $>$ \& \doxymbox{\hyperlink{class_block_buffer_ae1e9a8ab91e6240c5d98f8f8f90248e6}{get\+Records}} () const
+\begin{DoxyCompactList}\small\item\em Get all record strings currently in the buffer. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_buffer_a0eca273ff37ca22296c5bdf88972fcff}{add\+Record}} (const string \&csv\+Record)
+\begin{DoxyCompactList}\small\item\em Add a record string to the buffer. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_block_buffer_a7134feda4c2a3232fab99989d823ee8f}{free\+Bytes}} () const
+\begin{DoxyCompactList}\small\item\em How many bytes are still free in the block (excluding metadata). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_block_buffer_ae6b6209ee18853f89260633b380c41bf}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clear all records from the buffer (keeps metadata/\+block\+Size). \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_block_buffer_a482061aabaaf1fdeac4e9bebcb0941d7}{pack}} () const
+\begin{DoxyCompactList}\small\item\em Pack the buffer into a fixed-\/size byte array ready to write. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_buffer_a7dc2fb24c50136f52a6a77d103678a5f}{unpack}} (const string \&raw)
+\begin{DoxyCompactList}\small\item\em Unpack a fixed-\/size block from a raw byte string. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_buffer_a39eda570cb338b8cce9e4cd7a6733548}{write\+Block}} (fstream \&fs, int rbn) const
+\begin{DoxyCompactList}\small\item\em Write this buffer to a specific RBN in the file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_buffer_ae9a85cbf0504dfa804278cba5ef85b81}{read\+Block}} (fstream \&fs, int rbn)
+\begin{DoxyCompactList}\small\item\em Read a specific RBN from the file into this buffer. \end{DoxyCompactList}\item 
+long long \doxymbox{\hyperlink{class_block_buffer_ad6b5509c81a3de224451a29fc050db7e}{offset\+For\+RBN}} (int rbn) const
+\begin{DoxyCompactList}\small\item\em Compute the file byte offset for a given RBN. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_block_buffer_a9fe2559f4f70e5a09f4e5613737a5913}{make\+Avail}} (int next\+Avail=RBN\+\_\+\+NULL)
+\begin{DoxyCompactList}\small\item\em Mark this buffer as an avail-\/list block. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_block_buffer_ad304cf85a637031e7520b76c9797a873}{highest\+Key}} () const
+\begin{DoxyCompactList}\small\item\em Return the highest (largest) key string currently in the buffer. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_block_buffer_ab1354babee510b07592fa91dccf8c979}{lowest\+Key}} () const
+\begin{DoxyCompactList}\small\item\em Return the lowest key string currently in the buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Reads and writes fixed-\/size blocks in a blocked sequence set file. 
+
+Responsibilities:\+
+\begin{DoxyItemize}
+\item Pack a set of CSV record strings + metadata into a fixed-\/size block buffer.
+\item Unpack records from a block buffer back into strings.
+\item Read/\+write a block from/\+to disk by Relative Block Number (RBN).
+\item Manage per-\/block metadata:\+ predecessor RBN, successor RBN, record count.
+\end{DoxyItemize}
+
+This class does NOT know about ZIP codes specifically — it works with arbitrary CSV strings. The caller (\doxylink{struct_zip_code_record}{Zip\+Code\+Record} /\+ main) converts strings to typed objects. 
+
+\label{doc-constructors}
+\Hypertarget{class_block_buffer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_block_buffer_aa5ff981d27b7ade430a60ccd5c161335}\index{BlockBuffer@{BlockBuffer}!BlockBuffer@{BlockBuffer}}
+\index{BlockBuffer@{BlockBuffer}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{BlockBuffer()}{BlockBuffer()}}
+{\footnotesize\ttfamily \label{class_block_buffer_aa5ff981d27b7ade430a60ccd5c161335} 
+Block\+Buffer::\+\+Block\+Buffer (\begin{DoxyParamCaption}\item[{int}]{block\+Size}{ = {\ttfamily DEFAULT\+\_\+BLOCK\+\_\+SIZE}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a \doxylink{class_block_buffer}{Block\+Buffer} for the given block size. 
+
+Construct a \doxylink{class_block_buffer}{Block\+Buffer} with the given block size.
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Size} & Total bytes per block (default DEFAULT\+\_\+\+BLOCK\+\_\+\+SIZE).\\
+\hline
+\end{DoxyParams}
+All links default to RBN\+\_\+\+NULL; the record list is empty.
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Size} & Bytes per block. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_block_buffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_block_buffer_a0eca273ff37ca22296c5bdf88972fcff}\index{BlockBuffer@{BlockBuffer}!addRecord@{addRecord}}
+\index{addRecord@{addRecord}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{addRecord()}{addRecord()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a0eca273ff37ca22296c5bdf88972fcff} 
+bool Block\+Buffer::\+add\+Record (\begin{DoxyParamCaption}\item[{const string \&}]{csv\+Record}{}\end{DoxyParamCaption})}
+
+
+
+Add a record string to the buffer. 
+
+Attempt to add a CSV record string to this buffer.
+
+Returns false (and does not add) if there is not enough remaining capacity for the record + its 4-\/byte length prefix.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv\+Record} & CSV text for one record (no newline). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if added, false if block is full.
+\end{DoxyReturn}
+Each record occupies RECORD\+\_\+\+LEN\+\_\+\+WIDTH bytes for its length prefix plus the length of the record text itself.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv\+Record} & CSV text (no newline). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the record fit, false if the block is full. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_ae6b6209ee18853f89260633b380c41bf}\index{BlockBuffer@{BlockBuffer}!clear@{clear}}
+\index{clear@{clear}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ae6b6209ee18853f89260633b380c41bf} 
+void Block\+Buffer::\+clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Clear all records from the buffer (keeps metadata/\+block\+Size). 
+
+Clear all records from the buffer. \Hypertarget{class_block_buffer_a7134feda4c2a3232fab99989d823ee8f}\index{BlockBuffer@{BlockBuffer}!freeBytes@{freeBytes}}
+\index{freeBytes@{freeBytes}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{freeBytes()}{freeBytes()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a7134feda4c2a3232fab99989d823ee8f} 
+int Block\+Buffer::\+free\+Bytes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+How many bytes are still free in the block (excluding metadata). 
+
+Return the number of free bytes in the block payload.
+
+\begin{DoxyReturn}{Returns}
+Free bytes available for additional records. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_ae1e9a8ab91e6240c5d98f8f8f90248e6}\index{BlockBuffer@{BlockBuffer}!getRecords@{getRecords}}
+\index{getRecords@{getRecords}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{getRecords()}{getRecords()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ae1e9a8ab91e6240c5d98f8f8f90248e6} 
+const vector$<$ string $>$ \& Block\+Buffer::\+get\+Records (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get all record strings currently in the buffer. 
+
+\begin{DoxyReturn}{Returns}
+Const reference to the internal record vector. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_ad304cf85a637031e7520b76c9797a873}\index{BlockBuffer@{BlockBuffer}!highestKey@{highestKey}}
+\index{highestKey@{highestKey}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{highestKey()}{highestKey()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ad304cf85a637031e7520b76c9797a873} 
+string Block\+Buffer::\+highest\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Return the highest (largest) key string currently in the buffer. 
+
+Return the highest (last, largest) key in the buffer.
+
+Keys are the first CSV field (ZIP code). Assumes records are sorted. Returns "{}"{} if buffer is empty.
+
+The key is the ZIP code — the first field of the CSV record. Assumes records\+\_\+ is sorted ascending by key.
+
+\begin{DoxyReturn}{Returns}
+Highest key string, or "{}"{} if the buffer is empty. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_ab1354babee510b07592fa91dccf8c979}\index{BlockBuffer@{BlockBuffer}!lowestKey@{lowestKey}}
+\index{lowestKey@{lowestKey}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{lowestKey()}{lowestKey()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ab1354babee510b07592fa91dccf8c979} 
+string Block\+Buffer::\+lowest\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Return the lowest key string currently in the buffer. 
+
+Return the lowest (first, smallest) key in the buffer.
+
+Returns "{}"{} if buffer is empty.
+
+\begin{DoxyReturn}{Returns}
+Lowest key string, or "{}"{} if the buffer is empty. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_a9fe2559f4f70e5a09f4e5613737a5913}\index{BlockBuffer@{BlockBuffer}!makeAvail@{makeAvail}}
+\index{makeAvail@{makeAvail}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{makeAvail()}{makeAvail()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a9fe2559f4f70e5a09f4e5613737a5913} 
+void Block\+Buffer::\+make\+Avail (\begin{DoxyParamCaption}\item[{int}]{next\+Avail}{ = {\ttfamily RBN\+\_\+NULL}}\end{DoxyParamCaption})}
+
+
+
+Mark this buffer as an avail-\/list block. 
+
+Configure this buffer as an avail-\/list block.
+
+Sets record count to 0, predecessor to RBN\+\_\+\+NULL, fills payload with spaces. The successor RBN is set to next\+Avail (RBN\+\_\+\+NULL means end-\/of-\/list).
+
+
+\begin{DoxyParams}{Parameters}
+{\em next\+Avail} & RBN of next avail block, or RBN\+\_\+\+NULL.\\
+\hline
+\end{DoxyParams}
+An avail block has record count 0 and payload filled with spaces. The successor RBN links to the next avail block (or RBN\+\_\+\+NULL).
+
+
+\begin{DoxyParams}{Parameters}
+{\em next\+Avail} & RBN of the next avail block, or RBN\+\_\+\+NULL for end-\/of-\/list. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_block_buffer_ad6b5509c81a3de224451a29fc050db7e}\index{BlockBuffer@{BlockBuffer}!offsetForRBN@{offsetForRBN}}
+\index{offsetForRBN@{offsetForRBN}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{offsetForRBN()}{offsetForRBN()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ad6b5509c81a3de224451a29fc050db7e} 
+long long Block\+Buffer::\+offset\+For\+RBN (\begin{DoxyParamCaption}\item[{int}]{rbn}{}\end{DoxyParamCaption}) const}
+
+
+
+Compute the file byte offset for a given RBN. 
+
+Offset = rbn \texorpdfstring{$\ast$}{*} block\+Size. RBN 0 is reserved for the file header (also exactly one block).
+
+
+\begin{DoxyParams}{Parameters}
+{\em rbn} & Relative Block Number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Byte offset from start of file.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em rbn} & Relative Block Number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Byte offset from the start of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_a482061aabaaf1fdeac4e9bebcb0941d7}\index{BlockBuffer@{BlockBuffer}!pack@{pack}}
+\index{pack@{pack}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{pack()}{pack()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a482061aabaaf1fdeac4e9bebcb0941d7} 
+string Block\+Buffer::\+pack (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Pack the buffer into a fixed-\/size byte array ready to write. 
+
+Pack the buffer into a fixed-\/size string of block\+Size\+\_\+ bytes.
+
+Layout:\+ \+[4-\/byte count]\+\+[8-\/byte pred\+RBN]\+\+[8-\/byte succ\+RBN]\+ \+[4-\/byte len]\+\+[record]\+\+[4-\/byte len]\+\+[record]\+... \+[padding with spaces to block\+Size]\+
+
+\begin{DoxyReturn}{Returns}
+String of exactly block\+Size bytes.
+\end{DoxyReturn}
+Layout:\+ \+[4-\/byte count]\+\+[8-\/byte pred\+RBN]\+\+[8-\/byte succ\+RBN]\+ \+[4-\/byte len]\+\+[record text]\+\+[4-\/byte len]\+\+[record text]\+... \+[padding spaces]\+
+
+RBN\+\_\+\+NULL is stored as "{}\+FFFFFFFF"{}.
+
+\begin{DoxyReturn}{Returns}
+String of exactly block\+Size\+\_\+ bytes. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_ae9a85cbf0504dfa804278cba5ef85b81}\index{BlockBuffer@{BlockBuffer}!readBlock@{readBlock}}
+\index{readBlock@{readBlock}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{readBlock()}{readBlock()}}
+{\footnotesize\ttfamily \label{class_block_buffer_ae9a85cbf0504dfa804278cba5ef85b81} 
+bool Block\+Buffer::\+read\+Block (\begin{DoxyParamCaption}\item[{fstream \&}]{fs}{, }\item[{int}]{rbn}{}\end{DoxyParamCaption})}
+
+
+
+Read a specific RBN from the file into this buffer. 
+
+Read a block from disk by RBN into this buffer.
+
+Seeks to the correct byte offset and reads exactly block\+Size bytes, then calls \doxylink{class_block_buffer_a7dc2fb24c50136f52a6a77d103678a5f}{unpack()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream. \\
+\hline
+{\em rbn} & Relative Block Number to read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream. \\
+\hline
+{\em rbn} & Relative Block Number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_a7dc2fb24c50136f52a6a77d103678a5f}\index{BlockBuffer@{BlockBuffer}!unpack@{unpack}}
+\index{unpack@{unpack}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{unpack()}{unpack()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a7dc2fb24c50136f52a6a77d103678a5f} 
+bool Block\+Buffer::\+unpack (\begin{DoxyParamCaption}\item[{const string \&}]{raw}{}\end{DoxyParamCaption})}
+
+
+
+Unpack a fixed-\/size block from a raw byte string. 
+
+Unpack a raw block byte string into this buffer.
+
+Reads the metadata header and all length-\/prefixed record strings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em raw} & Raw byte string of exactly block\+Size bytes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on format error.
+\end{DoxyReturn}
+Reads the metadata header and all length-\/prefixed records.
+
+
+\begin{DoxyParams}{Parameters}
+{\em raw} & Raw byte string of exactly block\+Size\+\_\+ bytes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on format/\+length error. 
+\end{DoxyReturn}
+\Hypertarget{class_block_buffer_a39eda570cb338b8cce9e4cd7a6733548}\index{BlockBuffer@{BlockBuffer}!writeBlock@{writeBlock}}
+\index{writeBlock@{writeBlock}!BlockBuffer@{BlockBuffer}}
+\doxysubsubsection{\texorpdfstring{writeBlock()}{writeBlock()}}
+{\footnotesize\ttfamily \label{class_block_buffer_a39eda570cb338b8cce9e4cd7a6733548} 
+bool Block\+Buffer::\+write\+Block (\begin{DoxyParamCaption}\item[{fstream \&}]{fs}{, }\item[{int}]{rbn}{}\end{DoxyParamCaption}) const}
+
+
+
+Write this buffer to a specific RBN in the file. 
+
+Write this buffer to disk at the position for rbn.
+
+The file must be open for read/\+write (fstream). Seeks to the correct byte offset and writes exactly block\+Size bytes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream (binary or text, seekable). \\
+\hline
+{\em rbn} & Relative Block Number to write (RBN 0 = header block). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream (must be seekable, read+write). \\
+\hline
+{\em rbn} & Relative Block Number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_block_buffer_8h}{Block\+Buffer.\+h}}\item 
+\doxymbox{\hyperlink{_block_buffer_8cpp}{Block\+Buffer.\+cpp}}\end{DoxyCompactItemize}

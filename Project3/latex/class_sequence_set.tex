@@ -1,0 +1,345 @@
+﻿\doxysection{Sequence\+Set Class Reference}
+\hypertarget{class_sequence_set}{}\label{class_sequence_set}\index{SequenceSet@{SequenceSet}}
+
+
+Manages a blocked sequence set file for ZIP code records.  
+
+
+
+
+{\ttfamily \+\#include $<$Sequence\+Set.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_sequence_set_aa018d8fbca9d63e713076ee9f3ab34ca}{Sequence\+Set}} (int block\+Size=DEFAULT\+\_\+\+BLOCK\+\_\+\+SIZE)
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{class_sequence_set}{Sequence\+Set} manager. \end{DoxyCompactList}\item 
+\Hypertarget{class_sequence_set_ae7964b399734b8a5de9f07ad2be6a7c6}\label{class_sequence_set_ae7964b399734b8a5de9f07ad2be6a7c6} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Sequence\+Set} ()
+\begin{DoxyCompactList}\small\item\em Destructor — close the file if it is still open. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_a3136fefe35cb365fd5488109bda3ef42}{create}} (const string \&csv\+File, const string \&data\+File, const string \&index\+File)
+\begin{DoxyCompactList}\small\item\em Create a brand-\/new blocked sequence set from a sorted CSV file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_ae237af5b3159efcc17e22b2beebae109}{open}} (const string \&data\+File, const string \&index\+File)
+\begin{DoxyCompactList}\small\item\em Open an existing blocked sequence set (data + index). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_a8863374b3ac1a4c1c675f157a313b492}{close}} ()
+\begin{DoxyCompactList}\small\item\em Close the data file and flush the header. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_a58ef9d0ca899f8df286997d922d34dc8}{is\+Open}} () const
+\begin{DoxyCompactList}\small\item\em Check whether the file is open. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_a362a544531a970233c58231a2061794d}{scan\+All}} (function$<$ void(const \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&)$>$ visitor) const
+\begin{DoxyCompactList}\small\item\em Read all records in logical order and call visitor for each. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_af9353a1120a41d5b1bc4456471eccaa0}{dump\+Physical}} () const
+\begin{DoxyCompactList}\small\item\em Dump blocks in physical order (by RBN 1, 2, 3, ...). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_a380e1cbacc99be41eb10d13abc30f9e0}{dump\+Logical}} () const
+\begin{DoxyCompactList}\small\item\em Dump blocks in logical order (following successor chain). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_a814eb2733832d25f5e75c8eeff28df8b}{dump\+Index}} () const
+\begin{DoxyCompactList}\small\item\em Print a readable dump of the simple index. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_a4fcd2be4745e64bd4d4de15645cc6033}{search}} (const string \&zip\+Key, \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&result)
+\begin{DoxyCompactList}\small\item\em Search for a ZIP code record by key. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_a0e3e7b71cbfb1dd85cd05ff13284fb01}{insert}} (const \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&rec)
+\begin{DoxyCompactList}\small\item\em Insert a new ZIP code record into the sequence set. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_sequence_set_af5927ff55a83edf7232b4928e91302bb}{remove}} (const string \&zip\+Key)
+\begin{DoxyCompactList}\small\item\em Delete a ZIP code record from the sequence set. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_sequence_set_aac520c9ea32753a15d562c5d918fa038}{print\+Header}} () const
+\begin{DoxyCompactList}\small\item\em Print the file header contents to cout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages a blocked sequence set file for ZIP code records. 
+
+\label{doc-constructors}
+\Hypertarget{class_sequence_set_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_sequence_set_aa018d8fbca9d63e713076ee9f3ab34ca}\index{SequenceSet@{SequenceSet}!SequenceSet@{SequenceSet}}
+\index{SequenceSet@{SequenceSet}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{SequenceSet()}{SequenceSet()}}
+{\footnotesize\ttfamily \label{class_sequence_set_aa018d8fbca9d63e713076ee9f3ab34ca} 
+Sequence\+Set::\+\+Sequence\+Set (\begin{DoxyParamCaption}\item[{int}]{block\+Size}{ = {\ttfamily DEFAULT\+\_\+BLOCK\+\_\+SIZE}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a \doxylink{class_sequence_set}{Sequence\+Set} manager. 
+
+Construct a \doxylink{class_sequence_set}{Sequence\+Set} manager with the given block size.
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Size} & Block size in bytes (default 512). \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_sequence_set_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sequence_set_a8863374b3ac1a4c1c675f157a313b492}\index{SequenceSet@{SequenceSet}!close@{close}}
+\index{close@{close}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a8863374b3ac1a4c1c675f157a313b492} 
+void Sequence\+Set::\+close (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Close the data file and flush the header. 
+
+Close the data file, flushing the header first. \Hypertarget{class_sequence_set_a3136fefe35cb365fd5488109bda3ef42}\index{SequenceSet@{SequenceSet}!create@{create}}
+\index{create@{create}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a3136fefe35cb365fd5488109bda3ef42} 
+bool Sequence\+Set::\+create (\begin{DoxyParamCaption}\item[{const string \&}]{csv\+File}{, }\item[{const string \&}]{data\+File}{, }\item[{const string \&}]{index\+File}{}\end{DoxyParamCaption})}
+
+
+
+Create a brand-\/new blocked sequence set from a sorted CSV file. 
+
+Steps:\+ 1) Read the CSV one record at a time (streaming). 2) Pack records into blocks until each block hits 100\% capacity. 3) Write each completed block to disk. 4) Build the \doxylink{class_simple_index}{Simple\+Index} entry for each block. 5) Write the index file. 6) Write the file header (RBN 0).
+
+The CSV must already be sorted ascending by ZIP code.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv\+File} & Path to sorted CSV file. \\
+\hline
+{\em data\+File} & Path of the blocked sequence set to create. \\
+\hline
+{\em index\+File} & Path of the simple index file to create. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+The CSV must already be sorted ascending by ZIP code (first field). Each block is filled to capacity before a new block is started.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv\+File} & Sorted CSV input. \\
+\hline
+{\em data\+File} & Output blocked sequence set file. \\
+\hline
+{\em index\+File} & Output simple index file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{class_sequence_set_a814eb2733832d25f5e75c8eeff28df8b}\index{SequenceSet@{SequenceSet}!dumpIndex@{dumpIndex}}
+\index{dumpIndex@{dumpIndex}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{dumpIndex()}{dumpIndex()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a814eb2733832d25f5e75c8eeff28df8b} 
+void Sequence\+Set::\+dump\+Index (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Print a readable dump of the simple index. 
+
+Print a readable dump of the simple index to cout. \Hypertarget{class_sequence_set_a380e1cbacc99be41eb10d13abc30f9e0}\index{SequenceSet@{SequenceSet}!dumpLogical@{dumpLogical}}
+\index{dumpLogical@{dumpLogical}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{dumpLogical()}{dumpLogical()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a380e1cbacc99be41eb10d13abc30f9e0} 
+void Sequence\+Set::\+dump\+Logical (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Dump blocks in logical order (following successor chain). 
+
+Dump blocks in logical (successor chain) order.
+
+Same format as dump\+Physical but blocks appear in linked-\/list order. \Hypertarget{class_sequence_set_af9353a1120a41d5b1bc4456471eccaa0}\index{SequenceSet@{SequenceSet}!dumpPhysical@{dumpPhysical}}
+\index{dumpPhysical@{dumpPhysical}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{dumpPhysical()}{dumpPhysical()}}
+{\footnotesize\ttfamily \label{class_sequence_set_af9353a1120a41d5b1bc4456471eccaa0} 
+void Sequence\+Set::\+dump\+Physical (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Dump blocks in physical order (by RBN 1, 2, 3, ...). 
+
+Dump all blocks in physical (RBN) order.
+
+Format:\+ List Head:\+ $<$rbn$>$ Avail Head:\+ $<$rbn$>$ $<$pred\+RBN$>$ key1 key2 ... keyN $<$succ\+RBN$>$ $<$pred\+RBN$>$ {\itshape available} $<$succ\+RBN$>$ ... \Hypertarget{class_sequence_set_a0e3e7b71cbfb1dd85cd05ff13284fb01}\index{SequenceSet@{SequenceSet}!insert@{insert}}
+\index{insert@{insert}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a0e3e7b71cbfb1dd85cd05ff13284fb01} 
+bool Sequence\+Set::\+insert (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&}]{rec}{}\end{DoxyParamCaption})}
+
+
+
+Insert a new ZIP code record into the sequence set. 
+
+Insert a new record into the sequence set.
+
+Algorithm:\+ 1) Use the index to find the target block. 2) If the record fits, insert in sorted position. 3) If the block is full, split it:\+ a) Obtain an avail block (from avail list or append new block). b) Distribute records evenly between the two blocks. c) Update predecessor/\+successor links. d) Update the index. Logs block splits to cout.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rec} & Record to insert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false if the record already exists.
+\end{DoxyReturn}
+Finds the target block using the index, inserts the record in sorted order, and splits the block if it is full.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rec} & Record to insert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false if the key already exists. 
+\end{DoxyReturn}
+\Hypertarget{class_sequence_set_a58ef9d0ca899f8df286997d922d34dc8}\index{SequenceSet@{SequenceSet}!isOpen@{isOpen}}
+\index{isOpen@{isOpen}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{isOpen()}{isOpen()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a58ef9d0ca899f8df286997d922d34dc8} 
+bool Sequence\+Set::\+is\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Check whether the file is open. 
+
+Return whether the file is currently open. \Hypertarget{class_sequence_set_ae237af5b3159efcc17e22b2beebae109}\index{SequenceSet@{SequenceSet}!open@{open}}
+\index{open@{open}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily \label{class_sequence_set_ae237af5b3159efcc17e22b2beebae109} 
+bool Sequence\+Set::\+open (\begin{DoxyParamCaption}\item[{const string \&}]{data\+File}{, }\item[{const string \&}]{index\+File}{}\end{DoxyParamCaption})}
+
+
+
+Open an existing blocked sequence set (data + index). 
+
+Open an existing blocked sequence set.
+
+Reads the header from RBN 0, then loads the index into RAM.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\+File} & Path to the blocked sequence set file. \\
+\hline
+{\em index\+File} & Path to the simple index file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+Reads the header (RBN 0) and loads the index into RAM.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\+File} & Path to the blocked sequence set file. \\
+\hline
+{\em index\+File} & Path to the simple index file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{class_sequence_set_aac520c9ea32753a15d562c5d918fa038}\index{SequenceSet@{SequenceSet}!printHeader@{printHeader}}
+\index{printHeader@{printHeader}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{printHeader()}{printHeader()}}
+{\footnotesize\ttfamily \label{class_sequence_set_aac520c9ea32753a15d562c5d918fa038} 
+void Sequence\+Set::\+print\+Header (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Print the file header contents to cout. 
+
+Print the file header to cout. \Hypertarget{class_sequence_set_af5927ff55a83edf7232b4928e91302bb}\index{SequenceSet@{SequenceSet}!remove@{remove}}
+\index{remove@{remove}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily \label{class_sequence_set_af5927ff55a83edf7232b4928e91302bb} 
+bool Sequence\+Set::\+remove (\begin{DoxyParamCaption}\item[{const string \&}]{zip\+Key}{}\end{DoxyParamCaption})}
+
+
+
+Delete a ZIP code record from the sequence set. 
+
+Delete a record by ZIP key.
+
+Algorithm:\+ 1) Use the index to find the target block. 2) Remove the record from the block. 3) If the block is below the minimum fill:\+ a) Try redistribution with the left or right neighbour. b) If redistribution is not possible, merge with a neighbour. The merged block is added to the avail list. Logs merges /\+ redistributions to cout.
+
+
+\begin{DoxyParams}{Parameters}
+{\em zip\+Key} & ZIP code string to delete. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found and deleted, false if not found.
+\end{DoxyReturn}
+After deletion, if the block falls below minimum fill, attempts redistribution with a neighbour; if that is not possible, merges with a neighbour.
+
+
+\begin{DoxyParams}{Parameters}
+{\em zip\+Key} & ZIP code string to delete. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found and deleted. 
+\end{DoxyReturn}
+\Hypertarget{class_sequence_set_a362a544531a970233c58231a2061794d}\index{SequenceSet@{SequenceSet}!scanAll@{scanAll}}
+\index{scanAll@{scanAll}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{scanAll()}{scanAll()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a362a544531a970233c58231a2061794d} 
+void Sequence\+Set::\+scan\+All (\begin{DoxyParamCaption}\item[{function$<$ void(const \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&)$>$}]{visitor}{}\end{DoxyParamCaption}) const}
+
+
+
+Read all records in logical order and call visitor for each. 
+
+Visit every record in logical (key) order.
+
+Follows the successor RBN chain from seq\+Set\+Head. Each block is unpacked; each record string is parsed into a \doxylink{struct_zip_code_record}{Zip\+Code\+Record}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & Callback called with each \doxylink{struct_zip_code_record}{Zip\+Code\+Record} in key order.\\
+\hline
+\end{DoxyParams}
+Follows the successor chain starting from seq\+Set\+Head\+RBN. For each active block, reads its records and calls visitor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em visitor} & Callback receiving each \doxylink{struct_zip_code_record}{Zip\+Code\+Record}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_sequence_set_a4fcd2be4745e64bd4d4de15645cc6033}\index{SequenceSet@{SequenceSet}!search@{search}}
+\index{search@{search}!SequenceSet@{SequenceSet}}
+\doxysubsubsection{\texorpdfstring{search()}{search()}}
+{\footnotesize\ttfamily \label{class_sequence_set_a4fcd2be4745e64bd4d4de15645cc6033} 
+bool Sequence\+Set::\+search (\begin{DoxyParamCaption}\item[{const string \&}]{zip\+Key}{, }\item[{\doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&}]{result}{}\end{DoxyParamCaption})}
+
+
+
+Search for a ZIP code record by key. 
+
+Search for a record by ZIP key.
+
+Uses the index to find the candidate block, reads that block from disk, and performs a linear search within the block.
+
+
+\begin{DoxyParams}{Parameters}
+{\em zip\+Key} & ZIP code as a string (e.\+g. "{}56301"{}). \\
+\hline
+{\em result} & Output record if found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found, false if not in the file.
+\end{DoxyReturn}
+Uses the simple index to locate the candidate block, then searches that block linearly.
+
+
+\begin{DoxyParams}{Parameters}
+{\em zip\+Key} & ZIP code string (e.\+g. "{}56301"{}). \\
+\hline
+{\em result} & Output \doxylink{struct_zip_code_record}{Zip\+Code\+Record} if found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_sequence_set_8h}{Sequence\+Set.\+h}}\item 
+\doxymbox{\hyperlink{_sequence_set_8cpp}{Sequence\+Set.\+cpp}}\end{DoxyCompactItemize}

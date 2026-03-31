@@ -1,0 +1,54 @@
+﻿\doxysection{Block\+Header\+Buffer.\+h File Reference}
+\hypertarget{_block_header_buffer_8h}{}\label{_block_header_buffer_8h}\index{BlockHeaderBuffer.h@{BlockHeaderBuffer.h}}
+
+
+Header record class for the blocked sequence set data file.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_b_field_descriptor}{BField\+Descriptor}}
+\begin{DoxyCompactList}\small\item\em Stores the name and type format for one field in the blocked file. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_block_file_header}{Block\+File\+Header}}
+\begin{DoxyCompactList}\small\item\em All header fields for a blocked sequence set data file. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_block_header_buffer}{Block\+Header\+Buffer}}
+\begin{DoxyCompactList}\small\item\em Reads and writes the header record for a blocked sequence set file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header record class for the blocked sequence set data file. 
+
+Extends the Project 2 header concept to include all metadata required by the assignment for a blocked sequence set file:\+
+
+
+\begin{DoxyItemize}
+\item file structure type
+\item version
+\item header record size
+\item bytes used for each record-\/size integer
+\item size format type (ASCII)
+\item block size
+\item minimum block capacity percentage
+\item index file name
+\item index file schema
+\item record count
+\item block count
+\item field count + per-\/field name/\+type
+\item primary key field index
+\item avail-\/list head RBN
+\item sequence-\/set list head RBN
+\item stale flag
+\end{DoxyItemize}
+
+The header is stored in RBN 0 (the first block of the file) as a length-\/indicated, comma-\/separated record padded with spaces to block\+Size.
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}

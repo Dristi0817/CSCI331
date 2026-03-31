@@ -1,0 +1,34 @@
+﻿\doxysection{Block\+Buffer.\+h File Reference}
+\hypertarget{_block_buffer_8h}{}\label{_block_buffer_8h}\index{BlockBuffer.h@{BlockBuffer.h}}
+
+
+Block buffer class for the blocked sequence set file.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_block_buffer}{Block\+Buffer}}
+\begin{DoxyCompactList}\small\item\em Reads and writes fixed-\/size blocks in a blocked sequence set file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Block buffer class for the blocked sequence set file. 
+
+A "{}blocked sequence set"{} stores length-\/indicated, comma-\/separated ZIP code records packed into fixed-\/size blocks on disk. Each block is exactly BLOCK\+\_\+\+SIZE bytes. Blocks are addressed by their Relative Block Number (RBN), where RBN 0 is the header block (the data file header record) and RBN 1 is the first data/\+avail block.
+
+-- Block layout (active block) -------------------------------------------- Bytes 0–3 :\+ record count (4-\/byte ASCII integer, space-\/padded, e.\+g. "{}   3"{}) Bytes 4–11 :\+ predecessor RBN (8-\/byte ASCII integer, e.\+g. "{}00000000"{}) Bytes 12–19 :\+ successor RBN (8-\/byte ASCII integer, e.\+g. "{}00000002"{}) Bytes 20–end :\+ packed records, each prefixed with a 4-\/byte ASCII length
+
+-- Block layout (avail block) --------------------------------------------- Bytes 0–3 :\+ "{}   0"{} (record count == 0) Bytes 4–11 :\+ "{}00000000"{} (predecessor unused) Bytes 12–19 :\+ next-\/avail RBN (8-\/byte ASCII, or "{}00000000"{} for end-\/of-\/list) Bytes 20–end :\+ blanks
+
+-- RBN encoding ------------------------------------------------------------ RBN -\/1 (stored as "{}\+FFFFFFFF"{}) means "{}no link"{} (NULL) RBN 0 is reserved for the file header block. Data/\+avail blocks start at RBN 1.
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}
