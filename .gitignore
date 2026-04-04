@@ -1,4 +1,8 @@
 #Ignore doxygen-generated docs for all projects, other than the pdf
-/*/docs/**
-!/*/docs/latex/refman.pdf
+#Corrected for Project 3
+*/docs/**
+*/html/**
+*/latex/**
+!**/refman.pdf
+#Ignore zip files
 **/*.zip
