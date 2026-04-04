@@ -25,8 +25,9 @@
  * The header is stored in RBN 0 (the first block of the file) as a
  * length-indicated, comma-separated record padded with spaces to blockSize.
  *
- * @author Teagen Lee
- * @date Spring 2026
+ * @author Teagen Lee (primary contributor)
+ * @author Ethan Jackson (miscellaneous small revisions)
+ * @date April 2026
  */
 
 #ifndef BLOCKHEADERBUFFER_H
@@ -38,17 +39,17 @@
 
 using namespace std;
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────────────────────────
 // Supporting structures
-// ─────────────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────────────────────────
 
 /**
  * @struct BFieldDescriptor
  * @brief Stores the name and type format for one field in the blocked file.
  */
 struct BFieldDescriptor {
-    string name;   ///< e.g. "ZipCode"
-    string format; ///< e.g. "int", "string", "double"
+    string name;   ///< The field's name, e.g. "ZipCode"
+    string format; ///< The field's data type, e.g. "int", "string", "double"
 };
 
 /**
@@ -56,23 +57,23 @@ struct BFieldDescriptor {
  * @brief All header fields for a blocked sequence set data file.
  */
 struct BlockFileHeader {
-    string fileType;         ///< "ZipBlockedSeqSet"
-    int    version;          ///< File structure version (start at 1)
-    int    headerSizeBytes;  ///< Byte length of the serialized header record
-    int    recordSizeBytes;  ///< Width of per-record length prefix (4 bytes)
-    string sizeFormatType;   ///< "ASCII"
-    int    blockSize;        ///< Bytes per block (default 512)
-    int    minBlockCapacityPct; ///< Minimum fill percentage (default 50)
-    string indexFileName;    ///< Name of the simple index file (.sidx)
-    string indexSchema;      ///< Describes index format, e.g. "key:string;rbn:int"
-    long long recordCount;   ///< Total ZIP records stored
-    int    blockCount;       ///< Total blocks allocated (including header block)
-    int    fieldCount;       ///< Number of fields per record
-    vector<BFieldDescriptor> fields; ///< One entry per field
-    int    primaryKeyIndex;  ///< 0-based field index of the primary key
-    int    availHeadRBN;     ///< Head of avail-list chain (RBN_NULL if empty)
-    int    seqSetHeadRBN;    ///< Head of active sequence set chain (first data block)
-    bool   staleFlag;        ///< True if index may be out of date
+    bool staleFlag;      ///< True if index may be out of date.
+    int version;         ///< File structure version (start at 1).
+    int headerSizeBytes; ///< Byte length of the serialized header record.
+    int recordSizeBytes; ///< Width of per-record length prefix (4 bytes).
+    int blockSize;       ///< Bytes per block (default 512).
+    int minBlockCapacityPct; ///< Minimum fill percentage (default 50).
+    int blockCount;      ///< Total blocks allocated (including header block).
+    int fieldCount;      ///< Number of fields per record.
+    int primaryKeyIndex; ///< 0-based field index of the primary key.
+    int availHeadRBN;    ///< Head of avail-list chain (RBN_NULL if empty).
+    int seqSetHeadRBN; ///< Head of active SequenceSet chain (1st data block).
+    long long recordCount; ///< Total ZIP records stored.
+    string fileType;       ///< "ZipBlockedSeqSet".
+    string sizeFormatType; ///< "ASCII".
+    string indexFileName;  ///< Name of the simple index file (.sidx).
+    string indexSchema; ///< Describes index format, e.g. "key:string;rbn:int".
+    vector<BFieldDescriptor> fields; ///< One entry per field.
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -103,12 +104,12 @@ public:
      *
      * Call this before writing a brand-new blocked sequence set file.
      *
-     * @param indexFileName  Name of the simple primary key index file.
-     * @param blockSize      Block size in bytes.
-     * @param recordCount    Total ZIP records to be stored (may be 0 initially).
-     * @param blockCount     Total blocks allocated (including RBN 0).
-     * @param availHead      RBN of first avail block (RBN_NULL if none).
-     * @param seqHead        RBN of first active data block.
+     * @param indexFileName Name of the simple primary key index file.
+     * @param blockSize Block size in bytes.
+     * @param recordCount Total ZIP records to be stored (may be 0 initially).
+     * @param blockCount Total blocks allocated (including RBN 0).
+     * @param availHead RBN of first avail block (RBN_NULL if none).
+     * @param seqHead RBN of first active data block.
      */
     void buildDefault(const string& indexFileName,
                       int    blockSize,
@@ -157,8 +158,8 @@ public:
     void print() const;
 
 private:
-    BlockFileHeader hdr_;    ///< The header data.
-    int             blockSize_; ///< Block size for padding.
+    BlockFileHeader hdr_; ///< The header data.
+    int blockSize_; ///< Block size for padding.
 
     /// Serialize hdr_ to a CSV string.
     string serialize() const;
