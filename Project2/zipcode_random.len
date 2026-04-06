@@ -1,4 +1,4 @@
-0000000043 HDR,ZipLenFile,1,SIZEFMT=ASCII,SIZEWIDTH=10
+0000000150 HDR,ZipLenFile,1,10,ASCII,10,0,zipcode_random.len.idx,0,6,0,0,ZipCode:int,PlaceName:string,State:string,County:string,Latitude:double,Longitude:double
 0000000012 Code","Place
 0000000029 Name",State,County,Lat,Long,
 0000000046 96737,Ocean View,HI,Hawaii,19.1002,-155.7258,

@@ -1,0 +1,31 @@
+﻿\doxysection{Zip\+Code\+Buffer.\+h File Reference}
+\hypertarget{_zip_code_buffer_8h}{}\label{_zip_code_buffer_8h}\index{ZipCodeBuffer.h@{ZipCodeBuffer.h}}
+
+
+Record buffer class for reading ZIP code records from CSV files.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+{\ttfamily \+\#include $<$sstream$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}}
+\begin{DoxyCompactList}\small\item\em Stores one complete ZIP code record. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_zip_code_buffer}{Zip\+Code\+Buffer}}
+\begin{DoxyCompactList}\small\item\em Reads ZIP code records one at a time from a CSV file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Record buffer class for reading ZIP code records from CSV files. 
+
+Carried forward from Project 2 with no functional changes. In Project 3 this class serves as the "{}record buffer"{} layer:\+ \doxylink{class_block_buffer}{Block\+Buffer} → unpacks a raw record string from a block \doxylink{class_zip_code_buffer}{Zip\+Code\+Buffer} (record buffer role) → parses that string into a \doxylink{struct_zip_code_record}{Zip\+Code\+Record}
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}

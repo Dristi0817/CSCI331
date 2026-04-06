@@ -1,0 +1,235 @@
+﻿\doxysection{Simple\+Index Class Reference}
+\hypertarget{class_simple_index}{}\label{class_simple_index}\index{SimpleIndex@{SimpleIndex}}
+
+
+In-\/\+RAM representation of the simple primary key index.  
+
+
+
+
+{\ttfamily \+\#include $<$Simple\+Index.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_simple_index_a568167e1f7b626c221e2af34382fde08}\label{class_simple_index_a568167e1f7b626c221e2af34382fde08} 
+{\bfseries Simple\+Index} ()
+\begin{DoxyCompactList}\small\item\em Construct an empty \doxylink{class_simple_index}{Simple\+Index}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_simple_index_a2ae5e0cd2de9032577043f8166390aa4}{upsert}} (const string \&highest\+Key, int rbn)
+\begin{DoxyCompactList}\small\item\em Insert or update an entry \{highest\+Key → rbn\}. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_simple_index_a3c78cad104d30297fb5ec3f9031b32a3}{remove\+By\+RBN}} (int rbn)
+\begin{DoxyCompactList}\small\item\em Remove the entry whose value equals rbn. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_simple_index_a66185e58bb5cab697ff2995b7e5b3fe4}{remove\+By\+Key}} (const string \&highest\+Key)
+\begin{DoxyCompactList}\small\item\em Remove the entry whose key equals highest\+Key. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_simple_index_a3600b28f336f54b6367f1489043edf2c}{find\+RBN}} (const string \&target\+Key) const
+\begin{DoxyCompactList}\small\item\em Find the RBN of the block that could contain target\+Key. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_simple_index_abb66dc9e340aaf4e2fa755711050b85a}{write}} (const string \&filename) const
+\begin{DoxyCompactList}\small\item\em Write the index to a text file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_simple_index_a3d3d01a4ce86223eb39df49049ddf630}{read}} (const string \&filename)
+\begin{DoxyCompactList}\small\item\em Load the index from a text file into RAM. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_simple_index_a0e1d21f86e8ce5a7dcfb0097911ef9b9}{size}} () const
+\begin{DoxyCompactList}\small\item\em Return the number of entries in the index. \end{DoxyCompactList}\item 
+vector$<$ pair$<$ string, int $>$ $>$ \doxymbox{\hyperlink{class_simple_index_a3f57c8ff3d099f510f121df4322ca2b7}{entries}} () const
+\begin{DoxyCompactList}\small\item\em Return all entries as \{key, rbn\} pairs in key order. \end{DoxyCompactList}\item 
+\Hypertarget{class_simple_index_a29938cc5a5a4400b3002f61f96f20ada}\label{class_simple_index_a29938cc5a5a4400b3002f61f96f20ada} 
+void {\bfseries dump} () const
+\begin{DoxyCompactList}\small\item\em Print a readable dump of the index to cout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+In-\/\+RAM representation of the simple primary key index. 
+
+The index maps each active block\textquotesingle{}s highest key to its RBN. It uses a std::\+map so the entries are always sorted by key.
+
+Usage pattern:\+ 1) Build the index during file creation (insert entries for each block). 2) Write to disk. 3) At search time, load from disk into RAM. 4) To find a ZIP code, call \doxylink{class_simple_index_a3600b28f336f54b6367f1489043edf2c}{find\+RBN()}; it returns the RBN of the block whose highest key \texorpdfstring{$>$}{>}= the target key (the block that could contain it). 
+
+\label{doc-func-members}
+\Hypertarget{class_simple_index_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_simple_index_a3f57c8ff3d099f510f121df4322ca2b7}\index{SimpleIndex@{SimpleIndex}!entries@{entries}}
+\index{entries@{entries}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{entries()}{entries()}}
+{\footnotesize\ttfamily \label{class_simple_index_a3f57c8ff3d099f510f121df4322ca2b7} 
+vector$<$ pair$<$ string, int $>$ $>$ Simple\+Index::\+entries (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Return all entries as \{key, rbn\} pairs in key order. 
+
+Return all entries as a sorted vector of \{key, rbn\} pairs. \Hypertarget{class_simple_index_a3600b28f336f54b6367f1489043edf2c}\index{SimpleIndex@{SimpleIndex}!findRBN@{findRBN}}
+\index{findRBN@{findRBN}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{findRBN()}{findRBN()}}
+{\footnotesize\ttfamily \label{class_simple_index_a3600b28f336f54b6367f1489043edf2c} 
+int Simple\+Index::\+find\+RBN (\begin{DoxyParamCaption}\item[{const string \&}]{target\+Key}{}\end{DoxyParamCaption}) const}
+
+
+
+Find the RBN of the block that could contain target\+Key. 
+
+Looks up the first block whose highest key \texorpdfstring{$>$}{>}= target\+Key. If no such block exists, returns -\/1 (the key is beyond the last block).
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Key} & ZIP code string to search for (e.\+g. "{}56301"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+RBN of the candidate block, or -\/1 if not found.
+\end{DoxyReturn}
+Uses lower\+\_\+bound to find the first entry whose key \texorpdfstring{$>$}{>}= target\+Key. That block is the only one that could contain the record.
+
+Example:\+ Index:\+ 01005→1, 10199→2, 56310→3 Search for "{}05678"{}:\+ lower\+\_\+bound("{}05678"{}) → key "{}10199"{} → RBN 2 Block 2\textquotesingle{}s range is (01005, 10199]\+, so 05678 could be in block 2.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Key} & ZIP code string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+RBN, or -\/1 if target\+Key is beyond all blocks. 
+\end{DoxyReturn}
+\Hypertarget{class_simple_index_a3d3d01a4ce86223eb39df49049ddf630}\index{SimpleIndex@{SimpleIndex}!read@{read}}
+\index{read@{read}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_simple_index_a3d3d01a4ce86223eb39df49049ddf630} 
+bool Simple\+Index::\+read (\begin{DoxyParamCaption}\item[{const string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Load the index from a text file into RAM. 
+
+Load the index from a text file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Input file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+Expects the format written by \doxylink{class_simple_index_abb66dc9e340aaf4e2fa755711050b85a}{write()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{class_simple_index_a66185e58bb5cab697ff2995b7e5b3fe4}\index{SimpleIndex@{SimpleIndex}!removeByKey@{removeByKey}}
+\index{removeByKey@{removeByKey}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{removeByKey()}{removeByKey()}}
+{\footnotesize\ttfamily \label{class_simple_index_a66185e58bb5cab697ff2995b7e5b3fe4} 
+void Simple\+Index::\+remove\+By\+Key (\begin{DoxyParamCaption}\item[{const string \&}]{highest\+Key}{}\end{DoxyParamCaption})}
+
+
+
+Remove the entry whose key equals highest\+Key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em highest\+Key} & The exact highest-\/key string to remove.\\
+\hline
+{\em highest\+Key} & Exact key string to remove. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_simple_index_a3c78cad104d30297fb5ec3f9031b32a3}\index{SimpleIndex@{SimpleIndex}!removeByRBN@{removeByRBN}}
+\index{removeByRBN@{removeByRBN}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{removeByRBN()}{removeByRBN()}}
+{\footnotesize\ttfamily \label{class_simple_index_a3c78cad104d30297fb5ec3f9031b32a3} 
+void Simple\+Index::\+remove\+By\+RBN (\begin{DoxyParamCaption}\item[{int}]{rbn}{}\end{DoxyParamCaption})}
+
+
+
+Remove the entry whose value equals rbn. 
+
+Remove the entry whose value (RBN) equals rbn.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rbn} & RBN of the block to remove from the index.\\
+\hline
+\end{DoxyParams}
+Scans all entries (the index is small enough that linear scan is fine).
+
+
+\begin{DoxyParams}{Parameters}
+{\em rbn} & RBN to remove. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_simple_index_a0e1d21f86e8ce5a7dcfb0097911ef9b9}\index{SimpleIndex@{SimpleIndex}!size@{size}}
+\index{size@{size}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_simple_index_a0e1d21f86e8ce5a7dcfb0097911ef9b9} 
+int Simple\+Index::\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Return the number of entries in the index. 
+
+Return the number of index entries. \Hypertarget{class_simple_index_a2ae5e0cd2de9032577043f8166390aa4}\index{SimpleIndex@{SimpleIndex}!upsert@{upsert}}
+\index{upsert@{upsert}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{upsert()}{upsert()}}
+{\footnotesize\ttfamily \label{class_simple_index_a2ae5e0cd2de9032577043f8166390aa4} 
+void Simple\+Index::\+upsert (\begin{DoxyParamCaption}\item[{const string \&}]{highest\+Key}{, }\item[{int}]{rbn}{}\end{DoxyParamCaption})}
+
+
+
+Insert or update an entry \{highest\+Key → rbn\}. 
+
+Insert or update the entry \{highest\+Key → rbn\}.
+
+If an entry for this rbn already exists under a different key, the old entry is removed first.
+
+
+\begin{DoxyParams}{Parameters}
+{\em highest\+Key} & Highest ZIP key in the block (e.\+g. "{}56310"{}). \\
+\hline
+{\em rbn} & Relative Block Number of that block.\\
+\hline
+\end{DoxyParams}
+If the rbn already has an entry under a different key, the old entry is removed first (a block can only have one highest key at a time).
+
+
+\begin{DoxyParams}{Parameters}
+{\em highest\+Key} & Highest ZIP key string in the block. \\
+\hline
+{\em rbn} & Relative Block Number. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_simple_index_abb66dc9e340aaf4e2fa755711050b85a}\index{SimpleIndex@{SimpleIndex}!write@{write}}
+\index{write@{write}!SimpleIndex@{SimpleIndex}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily \label{class_simple_index_abb66dc9e340aaf4e2fa755711050b85a} 
+bool Simple\+Index::\+write (\begin{DoxyParamCaption}\item[{const string \&}]{filename}{}\end{DoxyParamCaption}) const}
+
+
+
+Write the index to a text file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Output file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+File format:\+ SIDX,1 $<$key$>$ $<$rbn$>$ ...
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to write. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_simple_index_8h}{Simple\+Index.\+h}}\item 
+\doxymbox{\hyperlink{_simple_index_8cpp}{Simple\+Index.\+cpp}}\end{DoxyCompactItemize}

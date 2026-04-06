@@ -1,0 +1,95 @@
+﻿\doxysection{Block\+Header\+Buffer.\+h}
+\hypertarget{_block_header_buffer_8h_source}{}\label{_block_header_buffer_8h_source}\doxymbox{\hyperlink{_block_header_buffer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifndef\ BLOCKHEADERBUFFER\_H}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ BLOCKHEADERBUFFER\_H}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Supporting\ structures}}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_b_field_descriptor}{BFieldDescriptor}}\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_b_field_descriptor_ad5dac98e39989a1641791f59d97ea434}{name}};\ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_b_field_descriptor_a16cec908dc0b541011824c79b41d5eb6}{format}};\ }
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_block_file_header}{BlockFileHeader}}\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_block_file_header_ad9f2a0bb92a4809905707bdce1488c00}{fileType}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a68554942e323783ecc396322895e694d}{version}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a9d07e831bf8e4106e903ddf701897e67}{headerSizeBytes}};\ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a2be85263c8651e348c452e9564ec0e15}{recordSizeBytes}};\ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_block_file_header_aa5db9a6c27764d38b430a0c857279a20}{sizeFormatType}};\ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_ab51458c67e61efe43b1fe14af39d190c}{blockSize}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_af61c56734b8a7ec1614e70b0331287a5}{minBlockCapacityPct}};\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_block_file_header_a656c50b7828a9c7fbbf702e12154c230}{indexFileName}};\ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_block_file_header_a9452e3d712172ed195eba859f0feda78}{indexSchema}};\ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{struct_block_file_header_a29cc39f75411e9152a807bacacab9ff5}{recordCount}};\ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a7a475537dd5c0ca6036a12a123f1ec8a}{blockCount}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_ac7ea815ca292adc6656c62dac2a69adf}{fieldCount}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ vector<BFieldDescriptor>\ \doxymbox{\hyperlink{struct_block_file_header_af64e8294ad553438457e3caf9c9ccd6b}{fields}};\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a826e84e47f16cfa69bfc0906885ef8ba}{primaryKeyIndex}};\ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a0665ae125cc9b5bc7c6eeceb560064c4}{availHeadRBN}};\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_block_file_header_a818bdda55f1a814200cd061f5c445c22}{seqSetHeadRBN}};\ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \doxymbox{\hyperlink{struct_block_file_header_ae0e077fc202993e23e123a977900fea8}{staleFlag}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ BlockHeaderBuffer}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_block_header_buffer_af5ace9b5444f80dbf38dd1949adacb2d}{BlockHeaderBuffer}}\ \{}
+\DoxyCodeLine{00090\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ --\ Construction\ ---------------------------------------------------------}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{explicit}\ \doxymbox{\hyperlink{class_block_header_buffer_af5ace9b5444f80dbf38dd1949adacb2d}{BlockHeaderBuffer}}(\textcolor{keywordtype}{int}\ blockSize\ =\ 512);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ --\ Build\ ----------------------------------------------------------------}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_block_header_buffer_a834484d1630c145ef52bb073eb467ac0}{buildDefault}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ indexFileName,}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ blockSize,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ recordCount,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ blockCount,}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ availHead,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ seqHead);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ --\ I/O\ ------------------------------------------------------------------}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_block_header_buffer_a3343d5894a8d70f4ab19660c687c7fd3}{write}}(fstream\&\ fs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_block_header_buffer_a57ed33cdf112c8d7629a8efda73e939e}{read}}(fstream\&\ fs);}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ --\ Accessors/Mutators\ ---------------------------------------------------}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_block_file_header}{BlockFileHeader}}\&\ getHeader()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00144\ \ \ \ \ \doxymbox{\hyperlink{struct_block_file_header}{BlockFileHeader}}\&\ \ \ \ \ \ \ getHeader();}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ setRecordCount(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ count);}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ setBlockCount(\textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ setAvailHead(\textcolor{keywordtype}{int}\ rbn);}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ setSeqSetHead(\textcolor{keywordtype}{int}\ rbn);}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{void}\ setStale(\textcolor{keywordtype}{bool}\ s);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ --\ Display\ --------------------------------------------------------------}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_block_header_buffer_aad764cd334075245ca9a0e62c1834865}{print}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00160\ \ \ \ \ \doxymbox{\hyperlink{struct_block_file_header}{BlockFileHeader}}\ hdr\_;\ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ blockSize\_;\ }
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{string}\ serialize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{bool}\ deserialize(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ s);}
+\DoxyCodeLine{00168\ \};}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BLOCKHEADERBUFFER\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,58 @@
+﻿\doxysection{Simple\+Index.\+h}
+\hypertarget{_simple_index_8h_source}{}\label{_simple_index_8h_source}\doxymbox{\hyperlink{_simple_index_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#ifndef\ SIMPLEINDEX\_H}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ SIMPLEINDEX\_H}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ SimpleIndex}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ -----------------------------------------------------------------------------}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_simple_index_a568167e1f7b626c221e2af34382fde08}{SimpleIndex}}\ \{}
+\DoxyCodeLine{00051\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00052\ \ \ \ \ \doxymbox{\hyperlink{class_simple_index_a568167e1f7b626c221e2af34382fde08}{SimpleIndex}}();}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ --\ Build\ /\ Modify\ -------------------------------------------------------}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_simple_index_a2ae5e0cd2de9032577043f8166390aa4}{upsert}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ highestKey,\ \textcolor{keywordtype}{int}\ rbn);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_simple_index_a3c78cad104d30297fb5ec3f9031b32a3}{removeByRBN}}(\textcolor{keywordtype}{int}\ rbn);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_simple_index_a66185e58bb5cab697ff2995b7e5b3fe4}{removeByKey}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ highestKey);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ --\ Search\ ---------------------------------------------------------------}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_simple_index_a3600b28f336f54b6367f1489043edf2c}{findRBN}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ targetKey)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ --\ I/O\ ------------------------------------------------------------------}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_simple_index_abb66dc9e340aaf4e2fa755711050b85a}{write}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_simple_index_a3d3d01a4ce86223eb39df49049ddf630}{read}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ --\ Accessors\ ------------------------------------------------------------}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_simple_index_a0e1d21f86e8ce5a7dcfb0097911ef9b9}{size}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00122\ \ \ \ \ vector<pair<string,\ int>>\ \doxymbox{\hyperlink{class_simple_index_a3f57c8ff3d099f510f121df4322ca2b7}{entries}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ --\ Display\ --------------------------------------------------------------}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_simple_index_a29938cc5a5a4400b3002f61f96f20ada}{dump}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00133\ \ \ \ \ map<string,\ int>\ index\_;}
+\DoxyCodeLine{00134\ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SIMPLEINDEX\_H}}
+
+\end{DoxyCode}

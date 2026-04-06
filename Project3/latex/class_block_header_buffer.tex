@@ -1,0 +1,174 @@
+﻿\doxysection{Block\+Header\+Buffer Class Reference}
+\hypertarget{class_block_header_buffer}{}\label{class_block_header_buffer}\index{BlockHeaderBuffer@{BlockHeaderBuffer}}
+
+
+Reads and writes the header record for a blocked sequence set file.  
+
+
+
+
+{\ttfamily \+\#include $<$Block\+Header\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_block_header_buffer_af5ace9b5444f80dbf38dd1949adacb2d}{Block\+Header\+Buffer}} (int block\+Size=512)
+\begin{DoxyCompactList}\small\item\em Construct with a given block size. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_block_header_buffer_a834484d1630c145ef52bb073eb467ac0}{build\+Default}} (const string \&index\+File\+Name, int block\+Size, long long record\+Count, int block\+Count, int avail\+Head, int seq\+Head)
+\begin{DoxyCompactList}\small\item\em Populate the header with default values for the ZIP code file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_header_buffer_a3343d5894a8d70f4ab19660c687c7fd3}{write}} (fstream \&fs) const
+\begin{DoxyCompactList}\small\item\em Write the header to RBN 0 of an open fstream. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_block_header_buffer_a57ed33cdf112c8d7629a8efda73e939e}{read}} (fstream \&fs)
+\begin{DoxyCompactList}\small\item\em Read the header from RBN 0 of an open fstream. \end{DoxyCompactList}\item 
+\Hypertarget{class_block_header_buffer_ae9c6c94ccb85e1d2a6c6b08a7090946c}\label{class_block_header_buffer_ae9c6c94ccb85e1d2a6c6b08a7090946c} 
+const \doxymbox{\hyperlink{struct_block_file_header}{Block\+File\+Header}} \& {\bfseries get\+Header} () const
+\item 
+\Hypertarget{class_block_header_buffer_a84cfa627a230cea6f7316155867a448e}\label{class_block_header_buffer_a84cfa627a230cea6f7316155867a448e} 
+\doxymbox{\hyperlink{struct_block_file_header}{Block\+File\+Header}} \& {\bfseries get\+Header} ()
+\item 
+\Hypertarget{class_block_header_buffer_a74d839653f1b1f83a841815d4cd1b064}\label{class_block_header_buffer_a74d839653f1b1f83a841815d4cd1b064} 
+void {\bfseries set\+Record\+Count} (long long count)
+\item 
+\Hypertarget{class_block_header_buffer_ae77ab11e6945ba9cb48ab4d51a3e0d78}\label{class_block_header_buffer_ae77ab11e6945ba9cb48ab4d51a3e0d78} 
+void {\bfseries set\+Block\+Count} (int count)
+\item 
+\Hypertarget{class_block_header_buffer_af5053e113bcbca260db950ab49791eb5}\label{class_block_header_buffer_af5053e113bcbca260db950ab49791eb5} 
+void {\bfseries set\+Avail\+Head} (int rbn)
+\item 
+\Hypertarget{class_block_header_buffer_a8153c64186b450373fe0c6c7d1d379ee}\label{class_block_header_buffer_a8153c64186b450373fe0c6c7d1d379ee} 
+void {\bfseries set\+Seq\+Set\+Head} (int rbn)
+\item 
+\Hypertarget{class_block_header_buffer_a304d45b284f07b56cfbbf743395318b0}\label{class_block_header_buffer_a304d45b284f07b56cfbbf743395318b0} 
+void {\bfseries set\+Stale} (bool s)
+\item 
+void \doxymbox{\hyperlink{class_block_header_buffer_aad764cd334075245ca9a0e62c1834865}{print}} () const
+\begin{DoxyCompactList}\small\item\em Print the header contents to cout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Reads and writes the header record for a blocked sequence set file. 
+
+The header occupies exactly one block (RBN 0). It is stored as a length-\/indicated CSV record padded with spaces to block\+Size bytes. 
+
+\label{doc-constructors}
+\Hypertarget{class_block_header_buffer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_block_header_buffer_af5ace9b5444f80dbf38dd1949adacb2d}\index{BlockHeaderBuffer@{BlockHeaderBuffer}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\index{BlockHeaderBuffer@{BlockHeaderBuffer}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\doxysubsubsection{\texorpdfstring{BlockHeaderBuffer()}{BlockHeaderBuffer()}}
+{\footnotesize\ttfamily \label{class_block_header_buffer_af5ace9b5444f80dbf38dd1949adacb2d} 
+Block\+Header\+Buffer::\+\+Block\+Header\+Buffer (\begin{DoxyParamCaption}\item[{int}]{block\+Size}{ = {\ttfamily 512}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct with a given block size. 
+
+Construct a \doxylink{class_block_header_buffer}{Block\+Header\+Buffer}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Size} & Block size in bytes (must match the data file). \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_block_header_buffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_block_header_buffer_a834484d1630c145ef52bb073eb467ac0}\index{BlockHeaderBuffer@{BlockHeaderBuffer}!buildDefault@{buildDefault}}
+\index{buildDefault@{buildDefault}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\doxysubsubsection{\texorpdfstring{buildDefault()}{buildDefault()}}
+{\footnotesize\ttfamily \label{class_block_header_buffer_a834484d1630c145ef52bb073eb467ac0} 
+void Block\+Header\+Buffer::\+build\+Default (\begin{DoxyParamCaption}\item[{const string \&}]{index\+File\+Name}{, }\item[{int}]{block\+Size}{, }\item[{long long}]{record\+Count}{, }\item[{int}]{block\+Count}{, }\item[{int}]{avail\+Head}{, }\item[{int}]{seq\+Head}{}\end{DoxyParamCaption})}
+
+
+
+Populate the header with default values for the ZIP code file. 
+
+Populate the header with default values for the ZIP code blocked file.
+
+Call this before writing a brand-\/new blocked sequence set file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index\+File\+Name} & Name of the simple primary key index file. \\
+\hline
+{\em block\+Size} & Block size in bytes. \\
+\hline
+{\em record\+Count} & Total ZIP records to be stored (may be 0 initially). \\
+\hline
+{\em block\+Count} & Total blocks allocated (including RBN 0). \\
+\hline
+{\em avail\+Head} & RBN of first avail block (RBN\+\_\+\+NULL if none). \\
+\hline
+{\em seq\+Head} & RBN of first active data block. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_block_header_buffer_aad764cd334075245ca9a0e62c1834865}\index{BlockHeaderBuffer@{BlockHeaderBuffer}!print@{print}}
+\index{print@{print}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_block_header_buffer_aad764cd334075245ca9a0e62c1834865} 
+void Block\+Header\+Buffer::\+print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Print the header contents to cout. 
+
+Print the header contents to cout in a readable format. \Hypertarget{class_block_header_buffer_a57ed33cdf112c8d7629a8efda73e939e}\index{BlockHeaderBuffer@{BlockHeaderBuffer}!read@{read}}
+\index{read@{read}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_block_header_buffer_a57ed33cdf112c8d7629a8efda73e939e} 
+bool Block\+Header\+Buffer::\+read (\begin{DoxyParamCaption}\item[{fstream \&}]{fs}{}\end{DoxyParamCaption})}
+
+
+
+Read the header from RBN 0 of an open fstream. 
+
+Read the header record from RBN 0 of the open fstream.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+\Hypertarget{class_block_header_buffer_a3343d5894a8d70f4ab19660c687c7fd3}\index{BlockHeaderBuffer@{BlockHeaderBuffer}!write@{write}}
+\index{write@{write}!BlockHeaderBuffer@{BlockHeaderBuffer}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily \label{class_block_header_buffer_a3343d5894a8d70f4ab19660c687c7fd3} 
+bool Block\+Header\+Buffer::\+write (\begin{DoxyParamCaption}\item[{fstream \&}]{fs}{}\end{DoxyParamCaption}) const}
+
+
+
+Write the header to RBN 0 of an open fstream. 
+
+Write the header record to RBN 0 of the open fstream.
+
+The header record is written as:\+ \+[10-\/byte ASCII length]\+\+[space]\+\+[CSV text]\+\+[padding to block\+Size]\+
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream positioned at any location (seeked internally). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success.
+\end{DoxyReturn}
+Format written at byte offset 0:\+ \+[10-\/byte ASCII length]\+\+[space]\+\+[CSV text]\+\+[spaces to block\+Size\+\_\+]\+
+
+
+\begin{DoxyParams}{Parameters}
+{\em fs} & Open fstream (read+write, seekable). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_block_header_buffer_8h}{Block\+Header\+Buffer.\+h}}\item 
+\doxymbox{\hyperlink{_block_header_buffer_8cpp}{Block\+Header\+Buffer.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,73 @@
+﻿\doxysection{Zip\+Code\+Buffer.\+h}
+\hypertarget{_zip_code_buffer_8h_source}{}\label{_zip_code_buffer_8h_source}\doxymbox{\hyperlink{_zip_code_buffer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#ifndef\ ZIPCODEBUFFER\_H}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ ZIPCODEBUFFER\_H}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ ============================================================================}}
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ ZipCodeRecord}}
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ ============================================================================}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_zip_code_record_a945cbd69ab4bd148868e31aa2b807cc4}{ZipCodeRecord}}\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_zip_code_record_a2f84c7640278f702a9ae47350e5f05d7}{zipCode}};\ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_zip_code_record_a61eda3f78cfb31b9d1a48a64b329765e}{placeName}};\ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_zip_code_record_a1659cd1e9425f7cebd46907211afbace}{state}};\ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_zip_code_record_a7576b0e103cfd20b744ac6932c70a953}{county}};\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{double}\ \doxymbox{\hyperlink{struct_zip_code_record_a69f7ed91c7dc4c496deb5450a556f2f5}{latitude}};\ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{double}\ \doxymbox{\hyperlink{struct_zip_code_record_a627c754e94e5629ec977067edb056de1}{longitude}};\ \ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \doxymbox{\hyperlink{struct_zip_code_record_a945cbd69ab4bd148868e31aa2b807cc4}{ZipCodeRecord}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \doxymbox{\hyperlink{struct_zip_code_record_a945cbd69ab4bd148868e31aa2b807cc4}{ZipCodeRecord}}(\textcolor{keywordtype}{int}\ zip,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ place,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ st,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ cnty,\ \textcolor{keywordtype}{double}\ lat,\ \textcolor{keywordtype}{double}\ lon);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a}{toCSV}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_zip_code_record_abfc69608427a7a5bfd2b7ae3444f589f}{fromCSV}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ csv);}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ ============================================================================}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ ZipCodeBuffer}}
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ ============================================================================}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d}{ZipCodeBuffer}}\ \{}
+\DoxyCodeLine{00071\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d}{ZipCodeBuffer}}();}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{explicit}\ \doxymbox{\hyperlink{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d}{ZipCodeBuffer}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ csvFilename);}
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{class_zip_code_buffer_af070305f8b71a6bee4cf455eb7ae065a}{\string~ZipCodeBuffer}}();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_zip_code_buffer_a22153548687ed94e79594ddac3fdf5a7}{open}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ csvFilename);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_zip_code_buffer_a55f5179cbed643fd47274c6ca570adbb}{close}}();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_zip_code_buffer_ac236d04b688cf8bc0c1f87a4b7692d4b}{isOpen}}()\ \ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_zip_code_buffer_ac9bf88e082b3a4ec9627ca58058f550c}{readRecord}}(\doxymbox{\hyperlink{struct_zip_code_record}{ZipCodeRecord}}\&\ record);}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_zip_code_buffer_a59b64918979bfa3b25780f01e5524aa5}{reset}}();}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{class_zip_code_buffer_a633257ba150bac649794dd029f3c6a5a}{getRecordCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_zip_code_buffer_aad9caaaa13976531a139ae70403f0b8d}{getFilename}}()\ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ vector<ZipCodeRecord>\ \doxymbox{\hyperlink{class_zip_code_buffer_a4f13fe9b5a36bec716da8be9344cd6b7}{gatherAllRecords}}();}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00087\ \ \ \ \ ifstream\ fileStream;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \ filename;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ headerSkipped;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{long}\ \ \ \ \ recordCount;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ colZip,\ colPlace,\ colState,\ colCounty,\ colLat,\ colLong;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseLine(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ line,\ \doxymbox{\hyperlink{struct_zip_code_record}{ZipCodeRecord}}\&\ record);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseHeader(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ headerLine);}
+\DoxyCodeLine{00096\ \ \ \ \ vector<string>\ splitCSV(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ line);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{string}\ trim(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ str);}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ZIPCODEBUFFER\_H}}
+
+\end{DoxyCode}

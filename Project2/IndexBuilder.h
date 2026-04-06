@@ -1,12 +1,9 @@
-// IndexBuilder.h
-#ifndef INDEXBUILDER_H
-#define INDEXBUILDER_H
-
-#include <string>
-
 /**
  * @file IndexBuilder.h
  * @brief Builds a primary key index file for a .len data file.
+ * @author Dristi Barnwal (primary contributor)
+ * @author Ethan Jackson, Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @date March 2026
  *
  * The index file stores:
  * - ZIP code (primary key)
@@ -23,6 +20,10 @@
  * - Then we can jump directly to a ZIP record using seekg(offset).
  * - We read only ONE record at a time (RAM rule).
  */
+#ifndef INDEXBUILDER_H
+#define INDEXBUILDER_H
+
+#include <string>
 
 /**
  * @brief Builds an index file from a .len file.
@@ -39,7 +40,6 @@
  * @param lenFile Path to the length-indicated data file
  * @param indexFile Path to the output index file
  */
-void buildIndex(const std::string& lenFile,
-                const std::string& indexFile);
+void buildIndex(const std::string& lenFile, const std::string& indexFile);
 
 #endif

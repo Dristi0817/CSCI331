@@ -1,0 +1,33 @@
+﻿\doxysection{Simple\+Index.\+h File Reference}
+\hypertarget{_simple_index_8h}{}\label{_simple_index_8h}\index{SimpleIndex.h@{SimpleIndex.h}}
+
+
+Simple primary key index for the blocked sequence set.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$map$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_simple_index}{Simple\+Index}}
+\begin{DoxyCompactList}\small\item\em In-\/\+RAM representation of the simple primary key index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simple primary key index for the blocked sequence set. 
+
+This index stores ordered pairs \{highest key in block, RBN\} as described in Folk Figure 10.\+3. The index is small enough to load entirely into RAM.
+
+On disk the index file has this format:\+ Line 0:\+ SIDX,1 (file type tag + version) Line N:\+ $<$key$>$ $<$rbn$>$ (one entry per active block)
+
+Example:\+ SIDX,1 01005 1 02139 2 56301 3
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}

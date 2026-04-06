@@ -1,17 +1,18 @@
-// LenFileWriter.cpp
+/**
+ * @file LenFileWriter.cpp
+ * @brief Implementation of CSV -> .len conversion.
+ * @author Dristi Barnwal (primary contributor)
+ * @author Ethan Jackson, Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @date March 2026
+ * 
+ * This file contains the code that writes the length-indicated format.
+ */
 #include "LenFileWriter.h"
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 
 using namespace std;
-
-/**
- * @file LenFileWriter.cpp
- * @brief Implementation of CSV -> .len conversion.
- *
- * This file contains the code that writes the length-indicated format.
- */
 
 /**
  * @brief Writes one length-indicated line to an output stream.

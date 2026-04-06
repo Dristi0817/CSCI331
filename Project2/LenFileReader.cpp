@@ -1,13 +1,14 @@
-// LenFileReader.cpp
-#include "LenFileReader.h"
-#include <cctype>      // for std::isdigit
-
-using namespace std;
-
 /**
  * @file LenFileReader.cpp
  * @brief Implementation for reading length-indicated records.
+ * @author Dristi Barnwal (primary contributor)
+ * @author Ethan Jackson, Marcus Julius, Teagen Lee, Natoli Mayu (reviewers)
+ * @date March 2026
  */
+#include "LenFileReader.h"
+#include <cctype>    // for std::isdigit
+
+using namespace std;
 
 /**
  * @brief Reads one length-indicated record from the input stream.

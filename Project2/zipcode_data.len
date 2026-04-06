@@ -1,4 +1,4 @@
-0000000043 HDR,ZipLenFile,1,SIZEFMT=ASCII,SIZEWIDTH=10
+0000000148 HDR,ZipLenFile,1,10,ASCII,10,0,zipcode_data.len.idx,0,6,0,0,ZipCode:int,PlaceName:string,State:string,County:string,Latitude:double,Longitude:double
 0000000042 501,Holtsville,NY,Suffolk,40.8154,-73.0451
 0000000042 544,Holtsville,NY,Suffolk,40.8154,-73.0451
 0000000039 1001,Agawam,MA,Hampden,42.0702,-72.6227

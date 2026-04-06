@@ -1,0 +1,50 @@
+﻿\doxysection{Sequence\+Set.\+h File Reference}
+\hypertarget{_sequence_set_8h}{}\label{_sequence_set_8h}\index{SequenceSet.h@{SequenceSet.h}}
+
+
+High-\/level manager for the blocked sequence set file.  
+
+
+{\ttfamily \+\#include "{}Block\+Buffer.\+h"{}}\newline
+{\ttfamily \+\#include "{}Block\+Header\+Buffer.\+h"{}}\newline
+{\ttfamily \+\#include "{}Simple\+Index.\+h"{}}\newline
+{\ttfamily \+\#include "{}Zip\+Code\+Buffer.\+h"{}}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$functional$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_sequence_set}{Sequence\+Set}}
+\begin{DoxyCompactList}\small\item\em Manages a blocked sequence set file for ZIP code records. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+High-\/level manager for the blocked sequence set file. 
+
+\doxylink{class_sequence_set}{Sequence\+Set} coordinates:\+
+\begin{DoxyItemize}
+\item Creating a blocked sequence set from a sorted CSV file.
+\item Sequential reading (for Project 1 style analysis).
+\item Physical and logical dump methods.
+\item Index-\/based record search.
+\item Record insertion (with block splitting).
+\item Record deletion (with redistribution /\+ merging).
+\item Avail-\/list management.
+\end{DoxyItemize}
+
+It uses:\+
+\begin{DoxyItemize}
+\item \doxylink{class_block_buffer}{Block\+Buffer} to pack/\+unpack individual blocks.
+\item \doxylink{class_block_header_buffer}{Block\+Header\+Buffer} to read/\+write the file header (RBN 0).
+\item \doxylink{class_simple_index}{Simple\+Index} to maintain the in-\/\+RAM \{highest\+Key, RBN\} index.
+\item \doxylink{struct_zip_code_record}{Zip\+Code\+Record} as the typed record object.
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}
