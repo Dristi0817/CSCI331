@@ -1,0 +1,134 @@
+﻿\doxysection{Zip\+Code\+Buffer Class Reference}
+\hypertarget{class_zip_code_buffer}{}\label{class_zip_code_buffer}\index{ZipCodeBuffer@{ZipCodeBuffer}}
+
+
+Reads ZIP code records one at a time from a CSV file.  
+
+
+
+
+{\ttfamily \+\#include $<$Zip\+Code\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d}{Zip\+Code\+Buffer}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_adf94efe7505fba2897d4d9ba19b0952a}\label{class_zip_code_buffer_adf94efe7505fba2897d4d9ba19b0952a} 
+{\bfseries Zip\+Code\+Buffer} (const string \&csv\+Filename)
+\begin{DoxyCompactList}\small\item\em Constructor that opens a file immediately. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_af070305f8b71a6bee4cf455eb7ae065a}\label{class_zip_code_buffer_af070305f8b71a6bee4cf455eb7ae065a} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Zip\+Code\+Buffer} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_zip_code_buffer_a22153548687ed94e79594ddac3fdf5a7}{open}} (const string \&csv\+Filename)
+\begin{DoxyCompactList}\small\item\em Opens a CSV file and processes its header row. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_a55f5179cbed643fd47274c6ca570adbb}\label{class_zip_code_buffer_a55f5179cbed643fd47274c6ca570adbb} 
+void {\bfseries close} ()
+\begin{DoxyCompactList}\small\item\em Closes the file and resets internal state. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_ac236d04b688cf8bc0c1f87a4b7692d4b}\label{class_zip_code_buffer_ac236d04b688cf8bc0c1f87a4b7692d4b} 
+bool {\bfseries is\+Open} () const
+\begin{DoxyCompactList}\small\item\em Checks whether file is open. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_zip_code_buffer_ac9bf88e082b3a4ec9627ca58058f550c}{read\+Record}} (\doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&record)
+\begin{DoxyCompactList}\small\item\em Reads one data record from the CSV file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_zip_code_buffer_a59b64918979bfa3b25780f01e5524aa5}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Resets file back to beginning and processes header row again. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_a633257ba150bac649794dd029f3c6a5a}\label{class_zip_code_buffer_a633257ba150bac649794dd029f3c6a5a} 
+long {\bfseries get\+Record\+Count} () const
+\begin{DoxyCompactList}\small\item\em Returns how many records have been read. \end{DoxyCompactList}\item 
+\Hypertarget{class_zip_code_buffer_aad9caaaa13976531a139ae70403f0b8d}\label{class_zip_code_buffer_aad9caaaa13976531a139ae70403f0b8d} 
+string {\bfseries get\+Filename} () const
+\begin{DoxyCompactList}\small\item\em Returns current filename. \end{DoxyCompactList}\item 
+vector$<$ \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} $>$ \doxymbox{\hyperlink{class_zip_code_buffer_a4f13fe9b5a36bec716da8be9344cd6b7}{gather\+All\+Records}} ()
+\begin{DoxyCompactList}\small\item\em Reads all records into a vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Reads ZIP code records one at a time from a CSV file. 
+
+In Project 3 this is also used as the "{}record buffer"{}:\+ given a raw CSV string (extracted from a block by \doxylink{class_block_buffer}{Block\+Buffer}), call from\+CSV() on a \doxylink{struct_zip_code_record}{Zip\+Code\+Record} to unpack its fields. 
+
+\label{doc-constructors}
+\Hypertarget{class_zip_code_buffer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d}\index{ZipCodeBuffer@{ZipCodeBuffer}!ZipCodeBuffer@{ZipCodeBuffer}}
+\index{ZipCodeBuffer@{ZipCodeBuffer}!ZipCodeBuffer@{ZipCodeBuffer}}
+\doxysubsubsection{\texorpdfstring{ZipCodeBuffer()}{ZipCodeBuffer()}}
+{\footnotesize\ttfamily \label{class_zip_code_buffer_a1a835f8568a94d7defe6e30f69c2ef5d} 
+Zip\+Code\+Buffer::\+\+Zip\+Code\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+Initializes all member variables to safe starting values. 
+
+\label{doc-func-members}
+\Hypertarget{class_zip_code_buffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_zip_code_buffer_a4f13fe9b5a36bec716da8be9344cd6b7}\index{ZipCodeBuffer@{ZipCodeBuffer}!gatherAllRecords@{gatherAllRecords}}
+\index{gatherAllRecords@{gatherAllRecords}!ZipCodeBuffer@{ZipCodeBuffer}}
+\doxysubsubsection{\texorpdfstring{gatherAllRecords()}{gatherAllRecords()}}
+{\footnotesize\ttfamily \label{class_zip_code_buffer_a4f13fe9b5a36bec716da8be9344cd6b7} 
+vector$<$ \doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} $>$ Zip\+Code\+Buffer::\+gather\+All\+Records (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Reads all records into a vector. 
+
+This is kept for compatibility, but Project 2 should prefer reading one record at a time. \Hypertarget{class_zip_code_buffer_a22153548687ed94e79594ddac3fdf5a7}\index{ZipCodeBuffer@{ZipCodeBuffer}!open@{open}}
+\index{open@{open}!ZipCodeBuffer@{ZipCodeBuffer}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily \label{class_zip_code_buffer_a22153548687ed94e79594ddac3fdf5a7} 
+bool Zip\+Code\+Buffer::\+open (\begin{DoxyParamCaption}\item[{const string \&}]{csv\+Filename}{}\end{DoxyParamCaption})}
+
+
+
+Opens a CSV file and processes its header row. 
+
+This function:\+ 1) closes any previously open file 2) opens the requested file 3) reads the first line (header row) 4) finds the positions of ZIP, place, state, county, latitude, longitude
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv\+Filename} & CSV file path \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on failure 
+\end{DoxyReturn}
+\Hypertarget{class_zip_code_buffer_ac9bf88e082b3a4ec9627ca58058f550c}\index{ZipCodeBuffer@{ZipCodeBuffer}!readRecord@{readRecord}}
+\index{readRecord@{readRecord}!ZipCodeBuffer@{ZipCodeBuffer}}
+\doxysubsubsection{\texorpdfstring{readRecord()}{readRecord()}}
+{\footnotesize\ttfamily \label{class_zip_code_buffer_ac9bf88e082b3a4ec9627ca58058f550c} 
+bool Zip\+Code\+Buffer::\+read\+Record (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_zip_code_record}{Zip\+Code\+Record}} \&}]{record}{}\end{DoxyParamCaption})}
+
+
+
+Reads one data record from the CSV file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em record} & Output record \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if record is read successfully, false on EOF or parse failure 
+\end{DoxyReturn}
+\Hypertarget{class_zip_code_buffer_a59b64918979bfa3b25780f01e5524aa5}\index{ZipCodeBuffer@{ZipCodeBuffer}!reset@{reset}}
+\index{reset@{reset}!ZipCodeBuffer@{ZipCodeBuffer}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_zip_code_buffer_a59b64918979bfa3b25780f01e5524aa5} 
+bool Zip\+Code\+Buffer::\+reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Resets file back to beginning and processes header row again. 
+
+\begin{DoxyReturn}{Returns}
+true if reset succeeds 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_zip_code_buffer_8h}{Zip\+Code\+Buffer.\+h}}\item 
+\doxymbox{\hyperlink{_zip_code_buffer_8cpp}{Zip\+Code\+Buffer.\+cpp}}\end{DoxyCompactItemize}

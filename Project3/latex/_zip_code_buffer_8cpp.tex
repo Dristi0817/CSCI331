@@ -1,0 +1,18 @@
+﻿\doxysection{Zip\+Code\+Buffer.\+cpp File Reference}
+\hypertarget{_zip_code_buffer_8cpp}{}\label{_zip_code_buffer_8cpp}\index{ZipCodeBuffer.cpp@{ZipCodeBuffer.cpp}}
+
+
+Implementation of the \doxylink{class_zip_code_buffer}{Zip\+Code\+Buffer} class.  
+
+
+{\ttfamily \+\#include "{}Zip\+Code\+Buffer.\+h"{}}\newline
+{\ttfamily \+\#include $<$algorithm$>$}\newline
+{\ttfamily \+\#include $<$cctype$>$}\newline
+{\ttfamily \+\#include $<$iomanip$>$}\newline
+{\ttfamily \+\#include $<$stdexcept$>$}\newline
+
+
+\doxysubsection{Detailed Description}
+Implementation of the \doxylink{class_zip_code_buffer}{Zip\+Code\+Buffer} class. 
+
+This version supports CSV files even when the columns are re-\/ordered. It reads the header row first, remembers the needed column positions, and then parses data rows using those positions. 

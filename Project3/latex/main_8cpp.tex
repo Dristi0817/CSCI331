@@ -1,0 +1,69 @@
+﻿\doxysection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Zip Code Group Project 3.\+0 — Blocked Sequence Set main controller.  
+
+
+{\ttfamily \+\#include "{}Sequence\+Set.\+h"{}}\newline
+{\ttfamily \+\#include "{}Zip\+Code\+Buffer.\+h"{}}\newline
+{\ttfamily \+\#include "{}Simple\+Index.\+h"{}}\newline
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+{\ttfamily \+\#include $<$sstream$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$map$>$}\newline
+{\ttfamily \+\#include $<$iomanip$>$}\newline
+{\ttfamily \+\#include $<$limits$>$}\newline
+{\ttfamily \+\#include $<$algorithm$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_state_extremes}{State\+Extremes}}
+\begin{DoxyCompactList}\small\item\em Keeps the most extreme ZIP codes for one state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+int {\bfseries main} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+)
+\begin{DoxyCompactList}\small\item\em Program entry point. Dispatches to the appropriate mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Zip Code Group Project 3.\+0 — Blocked Sequence Set main controller. 
+
+This is a multi-\/mode program. Each mode is selected by the first command line argument.
+
+------------------------------------------------------------------------------ MODES ------------------------------------------------------------------------------
+
+1) Create a blocked sequence set from a sorted CSV:\+ ./\+zip3 --create \texorpdfstring{$<$}{<}sorted.\+csv\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}out.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}out.\+sidx\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+2) Dump (physical then logical) an existing blocked sequence set:\+ ./\+zip3 --dump \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+3) Dump just the simple index:\+ ./\+zip3 --dump-\/index \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+4) Search for ZIP codes (loads index into RAM, never loads whole data file):\+ ./\+zip3 --search \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} -\/Z56301 -\/Z99546 -\/Z00001 \+[block\+Size]\+
+
+5) Project-\/1-\/style sequential analysis (state extremes):\+ ./\+zip3 --analyze \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+6) Add records from a file of CSV lines:\+ ./\+zip3 --add \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}records\+\_\+to\+\_\+add.\+csv\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+7) Delete records whose keys are listed in a file (one ZIP per line):\+ ./\+zip3 --delete \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}keys\+\_\+to\+\_\+delete.\+txt\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+8) Print the file header:\+ ./\+zip3 --header \texorpdfstring{$<$}{<}data.\+bss\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}data.\+sidx\texorpdfstring{$>$}{>} \+[block\+Size]\+
+
+------------------------------------------------------------------------------ NOTES ------------------------------------------------------------------------------
+\begin{DoxyItemize}
+\item The blocked sequence set file (.bss) stores length-\/indicated, comma-\/separated records in fixed-\/size blocks.
+\item The simple index file (.sidx) stores \{highest\+Key, RBN\} pairs and is loaded entirely into RAM during search /\+ add /\+ delete.
+\item Block splits, merges, and redistributions are logged to stdout.
+\item All program variables that can vary are set by command line or metadata.
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+Teagen Lee 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Spring 2026 
+\end{DoxyDate}

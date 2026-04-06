@@ -1,0 +1,73 @@
+﻿\doxysection{Block\+File\+Header Struct Reference}
+\hypertarget{struct_block_file_header}{}\label{struct_block_file_header}\index{BlockFileHeader@{BlockFileHeader}}
+
+
+All header fields for a blocked sequence set data file.  
+
+
+
+
+{\ttfamily \+\#include $<$Block\+Header\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_block_file_header_ad9f2a0bb92a4809905707bdce1488c00}\label{struct_block_file_header_ad9f2a0bb92a4809905707bdce1488c00} 
+string {\bfseries file\+Type}
+\begin{DoxyCompactList}\small\item\em "{}\+Zip\+Blocked\+Seq\+Set"{} \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a68554942e323783ecc396322895e694d}\label{struct_block_file_header_a68554942e323783ecc396322895e694d} 
+int {\bfseries version}
+\begin{DoxyCompactList}\small\item\em File structure version (start at 1). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a9d07e831bf8e4106e903ddf701897e67}\label{struct_block_file_header_a9d07e831bf8e4106e903ddf701897e67} 
+int {\bfseries header\+Size\+Bytes}
+\begin{DoxyCompactList}\small\item\em Byte length of the serialized header record. \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a2be85263c8651e348c452e9564ec0e15}\label{struct_block_file_header_a2be85263c8651e348c452e9564ec0e15} 
+int {\bfseries record\+Size\+Bytes}
+\begin{DoxyCompactList}\small\item\em Width of per-\/record length prefix (4 bytes). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_aa5db9a6c27764d38b430a0c857279a20}\label{struct_block_file_header_aa5db9a6c27764d38b430a0c857279a20} 
+string {\bfseries size\+Format\+Type}
+\begin{DoxyCompactList}\small\item\em "{}\+ASCII"{} \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_ab51458c67e61efe43b1fe14af39d190c}\label{struct_block_file_header_ab51458c67e61efe43b1fe14af39d190c} 
+int {\bfseries block\+Size}
+\begin{DoxyCompactList}\small\item\em Bytes per block (default 512). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_af61c56734b8a7ec1614e70b0331287a5}\label{struct_block_file_header_af61c56734b8a7ec1614e70b0331287a5} 
+int {\bfseries min\+Block\+Capacity\+Pct}
+\begin{DoxyCompactList}\small\item\em Minimum fill percentage (default 50). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a656c50b7828a9c7fbbf702e12154c230}\label{struct_block_file_header_a656c50b7828a9c7fbbf702e12154c230} 
+string {\bfseries index\+File\+Name}
+\begin{DoxyCompactList}\small\item\em Name of the simple index file (.sidx). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a9452e3d712172ed195eba859f0feda78}\label{struct_block_file_header_a9452e3d712172ed195eba859f0feda78} 
+string {\bfseries index\+Schema}
+\begin{DoxyCompactList}\small\item\em Describes index format, e.\+g. "{}key:\+string;rbn:\+int"{}. \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a29cc39f75411e9152a807bacacab9ff5}\label{struct_block_file_header_a29cc39f75411e9152a807bacacab9ff5} 
+long long {\bfseries record\+Count}
+\begin{DoxyCompactList}\small\item\em Total ZIP records stored. \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a7a475537dd5c0ca6036a12a123f1ec8a}\label{struct_block_file_header_a7a475537dd5c0ca6036a12a123f1ec8a} 
+int {\bfseries block\+Count}
+\begin{DoxyCompactList}\small\item\em Total blocks allocated (including header block). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_ac7ea815ca292adc6656c62dac2a69adf}\label{struct_block_file_header_ac7ea815ca292adc6656c62dac2a69adf} 
+int {\bfseries field\+Count}
+\begin{DoxyCompactList}\small\item\em Number of fields per record. \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_af64e8294ad553438457e3caf9c9ccd6b}\label{struct_block_file_header_af64e8294ad553438457e3caf9c9ccd6b} 
+vector$<$ \doxymbox{\hyperlink{struct_b_field_descriptor}{BField\+Descriptor}} $>$ {\bfseries fields}
+\begin{DoxyCompactList}\small\item\em One entry per field. \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a826e84e47f16cfa69bfc0906885ef8ba}\label{struct_block_file_header_a826e84e47f16cfa69bfc0906885ef8ba} 
+int {\bfseries primary\+Key\+Index}
+\begin{DoxyCompactList}\small\item\em 0-\/based field index of the primary key \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a0665ae125cc9b5bc7c6eeceb560064c4}\label{struct_block_file_header_a0665ae125cc9b5bc7c6eeceb560064c4} 
+int {\bfseries avail\+Head\+RBN}
+\begin{DoxyCompactList}\small\item\em Head of avail-\/list chain (RBN\+\_\+\+NULL if empty). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_a818bdda55f1a814200cd061f5c445c22}\label{struct_block_file_header_a818bdda55f1a814200cd061f5c445c22} 
+int {\bfseries seq\+Set\+Head\+RBN}
+\begin{DoxyCompactList}\small\item\em Head of active sequence set chain (first data block). \end{DoxyCompactList}\item 
+\Hypertarget{struct_block_file_header_ae0e077fc202993e23e123a977900fea8}\label{struct_block_file_header_ae0e077fc202993e23e123a977900fea8} 
+bool {\bfseries stale\+Flag}
+\begin{DoxyCompactList}\small\item\em True if index may be out of date. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+All header fields for a blocked sequence set data file. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_block_header_buffer_8h}{Block\+Header\+Buffer.\+h}}\end{DoxyCompactItemize}

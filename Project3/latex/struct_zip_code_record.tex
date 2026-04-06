@@ -1,0 +1,107 @@
+﻿\doxysection{Zip\+Code\+Record Struct Reference}
+\hypertarget{struct_zip_code_record}{}\label{struct_zip_code_record}\index{ZipCodeRecord@{ZipCodeRecord}}
+
+
+Stores one complete ZIP code record.  
+
+
+
+
+{\ttfamily \+\#include $<$Zip\+Code\+Buffer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_zip_code_record_a945cbd69ab4bd148868e31aa2b807cc4}\label{struct_zip_code_record_a945cbd69ab4bd148868e31aa2b807cc4} 
+{\bfseries Zip\+Code\+Record} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a51579d63a9c491070f380eadbfe73694}\label{struct_zip_code_record_a51579d63a9c491070f380eadbfe73694} 
+{\bfseries Zip\+Code\+Record} (int zip, const string \&place, const string \&st, const string \&cnty, double lat, double lon)
+\begin{DoxyCompactList}\small\item\em Parameterized constructor. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a}{to\+CSV}} () const
+\begin{DoxyCompactList}\small\item\em Serialize this record to a comma-\/separated string. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{struct_zip_code_record_abfc69608427a7a5bfd2b7ae3444f589f}{from\+CSV}} (const string \&csv)
+\begin{DoxyCompactList}\small\item\em Populate this record from a comma-\/separated string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_zip_code_record_a2f84c7640278f702a9ae47350e5f05d7}\label{struct_zip_code_record_a2f84c7640278f702a9ae47350e5f05d7} 
+int {\bfseries zip\+Code}
+\begin{DoxyCompactList}\small\item\em 5-\/digit ZIP code (primary key) \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a61eda3f78cfb31b9d1a48a64b329765e}\label{struct_zip_code_record_a61eda3f78cfb31b9d1a48a64b329765e} 
+string {\bfseries place\+Name}
+\begin{DoxyCompactList}\small\item\em City /\+ place name. \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a1659cd1e9425f7cebd46907211afbace}\label{struct_zip_code_record_a1659cd1e9425f7cebd46907211afbace} 
+string {\bfseries state}
+\begin{DoxyCompactList}\small\item\em Two-\/letter state abbreviation. \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a7576b0e103cfd20b744ac6932c70a953}\label{struct_zip_code_record_a7576b0e103cfd20b744ac6932c70a953} 
+string {\bfseries county}
+\begin{DoxyCompactList}\small\item\em County name. \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a69f7ed91c7dc4c496deb5450a556f2f5}\label{struct_zip_code_record_a69f7ed91c7dc4c496deb5450a556f2f5} 
+double {\bfseries latitude}
+\begin{DoxyCompactList}\small\item\em Latitude coordinate. \end{DoxyCompactList}\item 
+\Hypertarget{struct_zip_code_record_a627c754e94e5629ec977067edb056de1}\label{struct_zip_code_record_a627c754e94e5629ec977067edb056de1} 
+double {\bfseries longitude}
+\begin{DoxyCompactList}\small\item\em Longitude coordinate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores one complete ZIP code record. 
+
+\label{doc-func-members}
+\Hypertarget{struct_zip_code_record_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_zip_code_record_abfc69608427a7a5bfd2b7ae3444f589f}\index{ZipCodeRecord@{ZipCodeRecord}!fromCSV@{fromCSV}}
+\index{fromCSV@{fromCSV}!ZipCodeRecord@{ZipCodeRecord}}
+\doxysubsubsection{\texorpdfstring{fromCSV()}{fromCSV()}}
+{\footnotesize\ttfamily \label{struct_zip_code_record_abfc69608427a7a5bfd2b7ae3444f589f} 
+bool Zip\+Code\+Record::\+from\+CSV (\begin{DoxyParamCaption}\item[{const string \&}]{csv}{}\end{DoxyParamCaption})}
+
+
+
+Populate this record from a comma-\/separated string. 
+
+Populate fields from a comma-\/separated string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv} & CSV text produced by \doxylink{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a}{to\+CSV()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success
+\end{DoxyReturn}
+Expected order:\+ Zip\+Code,Place\+Name,State,County,Lat,Long
+
+
+\begin{DoxyParams}{Parameters}
+{\em csv} & CSV text (e.\+g. from \doxylink{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a}{to\+CSV()}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if all six fields were parsed successfully 
+\end{DoxyReturn}
+\Hypertarget{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a}\index{ZipCodeRecord@{ZipCodeRecord}!toCSV@{toCSV}}
+\index{toCSV@{toCSV}!ZipCodeRecord@{ZipCodeRecord}}
+\doxysubsubsection{\texorpdfstring{toCSV()}{toCSV()}}
+{\footnotesize\ttfamily \label{struct_zip_code_record_ad276fdb4ef282cc306c6fd43f8c5da4a} 
+string Zip\+Code\+Record::\+to\+CSV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Serialize this record to a comma-\/separated string. 
+
+\begin{DoxyReturn}{Returns}
+CSV text (no newline), e.\+g. "{}56301,\+St Cloud,\+MN,\+Stearns,45.\+5579,-\/94.\+1632"{}
+\end{DoxyReturn}
+Field order matches the original CSV:\+ Zip\+Code,Place\+Name,State,County,Lat,Long
+
+\begin{DoxyReturn}{Returns}
+CSV text with no trailing newline 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{_zip_code_buffer_8h}{Zip\+Code\+Buffer.\+h}}\item 
+\doxymbox{\hyperlink{_zip_code_buffer_8cpp}{Zip\+Code\+Buffer.\+cpp}}\end{DoxyCompactItemize}
